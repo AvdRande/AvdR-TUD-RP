@@ -5,7 +5,8 @@
 
 #
 data/
-
+train.txt
+test.txt
 
 # User-specific files
 *.rsuser
