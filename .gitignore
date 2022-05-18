@@ -353,3 +353,6 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+tree_generation/clusters.json
+tree_generation/json_simatrix.json
+tree_generation/nt-clusters.json

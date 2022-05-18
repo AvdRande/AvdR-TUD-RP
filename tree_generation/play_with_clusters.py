@@ -71,7 +71,7 @@ parents = list_parents(data_no_trivial, ["root"], [])
 print(parents[0])
 print(parents[-1])
 
-print("debug)")
+print("debug")
 
 # Closing file
 f.close()

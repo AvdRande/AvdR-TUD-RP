@@ -34,12 +34,3 @@ with open("data/tagrecomdata_topics220_repos152k_onehot_train.csv", "r") as tagd
 
     json_file = open("tree_generation/json_simatrix.json", "w")
     json.dump(sim_as_dict, json_file)
-
-    # printstring = ""
-    # for i in range(len(sim_matrix)):
-    #     for j in range(len(sim_matrix[0])):
-    #         printstring += str(sim_matrix[i, j]) + " "
-    #     printstring += "\n"
-    # f = open("tree_generation/simatrix.txt", "w")
-    # f.write(printstring)
-    # f.close()
