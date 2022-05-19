@@ -1,0 +1,35 @@
+starting hierarchy:
+{
+    value: id: name of node, always something like: lvl ###
+    children: [
+        similar hierarchies, if empty, is leaf
+    ]
+    content: [
+        list of all tags which are agglomerated in this hierarchy
+        parent is union of children, sorted alphabetically
+        leaves can have more than 1 in here
+    ]
+}
+
+idx hierarchy:
+{
+    name: lvl ### or root
+    children: [
+        similar hierarchies, if empty, is leaf
+    ]
+    content: [
+        for all of the tags in the hierarchy:
+            the index of the tag in the alphabetical order of labelnames
+    ]
+}
+
+label subtree hierarchy:
+{
+    name: lvl ### or root
+    chldren: [
+        similar hierarchies, if empty, is leaf
+    ]
+    content: [
+        
+    ]
+}
