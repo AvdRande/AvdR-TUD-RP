@@ -30,13 +30,15 @@ def ft(trainf, testf, hierarchyf, labels_column, readme_column, model_output, le
     train = pd.read_csv(trainf)
     test = pd.read_csv(testf)
 
-    limiter = 1000
+    limiter = 10000
 
     train_features, train_labels = df2feature_class(train, limiter, readme_column, labels_column)
 
     # convert features to vectors using tfidf
-    vectorizer = TfidfVectorizer(max_features=1500, min_df=5, max_df=0.7)
+    vectorizer = TfidfVectorizer(min_df=5, max_df=0.7, max_features=2500)
     X = vectorizer.fit_transform([" ".join(train_feature) for train_feature in train_features]).toarray()
+
+    label_names = np.array(train.columns[:-2])
 
     if model_output == "LR":
         # classify using logistic regression
@@ -45,27 +47,41 @@ def ft(trainf, testf, hierarchyf, labels_column, readme_column, model_output, le
     elif model_output == "HMC-LMLP":
         with open(hierarchyf) as f:
             hierarchy = json.load(f)
-            i_hier = build_idx_hierarchy(hierarchy, np.array(train.columns[:-2]))
+
+            i_hier = build_idx_hierarchy(hierarchy, label_names)
+
             y = [labels_to_subtree(i_hier, tl) for tl in train_labels]
-            
-            print("Training first HMC-LMLP layer")
-            # train the first layer of the hierarchy
-            first_NN_layer = MLPClassifier(solver='lbfgs', hidden_layer_sizes=(len(train.columns)-2), random_state=1)
-            # first_y = np.array([np.array([1 if 1 in sub["content"] else 0 for sub in y2["children"]]) for y2 in y])
-            first_y = [labels_at_level(yiter, 0) for yiter in y]
-            first_NN_layer.fit(X, first_y)
 
-            print("Training second HMC-LMLP layer")
-            # train the second layer
-            second_NN_layer = MLPClassifier(solver='lbfgs', hidden_layer_sizes=(len(train.columns)-2), random_state=1)
-            second_X = first_NN_layer.predict(X)
-            second_y = [labels_at_level(yiter, 1) for yiter in y]
-            second_NN_layer.fit(second_X, second_y)
+            depth = tree_depth(hierarchy)
+            nn_layers = []
+            predictions = []
+            for level in range(depth):
+                print("Training HMC-LMLP layer ", level)
+                # the input matrix for this neural network
+                feature_matrix = X if level == 0 else predictions[level - 1]
+                # the expected outcome for this neural network
+                target_labels = [labels_at_level(yiter, level) for yiter in y]
+                # how many hidden layers?
+                n_hidden_layers = max(min(100,len(feature_matrix[0])), len(target_labels[0]))
+                # make a new classifier for this level of the hierarchy
+                nn_layers.append(MLPClassifier(solver='lbfgs', hidden_layer_sizes=n_hidden_layers, random_state=1, max_iter=100))
+                # train the neural network
+                print("Neural network consists of three layers: ", len(feature_matrix[0]), " to ", n_hidden_layers, " to ", len(target_labels[0]))
+                nn_layers[level].fit(feature_matrix, target_labels)
+                # add results to predictions
+                print("Fitting done, calculating predictions for next layer")
+                if level == depth - 1:
+                    predictions.append(nn_layers[level].predict(feature_matrix))
+                else:
+                    predictions.append(nn_layers[level].predict_proba(feature_matrix))
 
-            print(second_NN_layer.predict(first_NN_layer.predict(X[:100])))
-
-
-    return 0
+            print("Training done, now showing result:")
+            actual = [np.array(labels_at_level(labels_to_subtree(i_hier, train_label), depth - 1)) for train_label in train_labels[:100]]
+            for i in range(100):
+                print("Prediction: ", binlabels_to_text(predictions[depth - 1][i], label_names))
+                print("Actual: " , binlabels_to_text(actual[i], label_names))
+                print("Difference: ", sum(np.abs(predictions[depth - 1][i] - np.array(actual[i]))))
+                input()
 
 # convert hierarchy to hierarchy of indexes of the labels
 def build_idx_hierarchy(hierarchy, label_names):
@@ -90,22 +106,35 @@ def labels_to_subtree(idx_hierarchy, labels):
     
     ret["name"] = idx_hierarchy["name"]
     
-    ret["content"] = []
-    for i in range(len(labels)):
-        if labels[i] == 1 and i in idx_hierarchy["content"]:
-            ret["content"].append(1)
-        else:
-            ret["content"].append(0)
-    
-    ret["children"] = []
-    for child in idx_hierarchy["children"]:
-        ret["children"].append(labels_to_subtree(child, labels))
+    if len(idx_hierarchy["children"]) == 0:
+        ret["content"] = [labels[idx] for idx in idx_hierarchy["content"]]
+        ret["children"] = []
+    else:
+        ret["content"] = []
+        for i in range(len(labels)):
+            if labels[i] == 1 and i in idx_hierarchy["content"]:
+                ret["content"].append(1)
+            else:
+                ret["content"].append(0)
+        
+        ret["children"] = []
+        for child in idx_hierarchy["children"]:
+            ret["children"].append(labels_to_subtree(child, labels))
 
     return ret
 
+def tree_depth(tree):
+    if len(tree["children"]) == 0:
+        return 1
+    else:
+        return 1 + tree_depth(tree["children"][0])
+
 def labels_at_level(idx_hierarchy, level):
     if level == 0:
-        return np.array([1 if 1 in sub["content"] else 0 for sub in idx_hierarchy["children"]])
+        if len(idx_hierarchy["children"]) == 0:
+            return idx_hierarchy["content"] # CONTINUE HERE STUPID ME!
+        else:
+            return np.array([1 if 1 in sub["content"] else 0 for sub in idx_hierarchy["children"]])
     if level > 0:
         ret = []
         for child in idx_hierarchy["children"]:
@@ -113,6 +142,13 @@ def labels_at_level(idx_hierarchy, level):
             for t in temp:
                 ret.append(t)
         return ret
+
+def binlabels_to_text(binlabels, label_names):
+    ret = []
+    for i in range(len(binlabels)):
+        if binlabels[i] == 1:
+            ret.append(label_names[i])
+    return ret
 
 def df2feature_class(dataframe, n, feature_column, label_column):
     total = n
