@@ -10,8 +10,8 @@ from scipy import stats
 
 
 @click.command()
-@click.option('--train', prompt='train CSV file path', help='train CSV file path.')
-@click.option('--test', prompt='test CSV file path', help='test CSV file path.')
+@click.option('--train', default='data\\tagrecomdata_topics220_repos152k_onehot_train.csv', prompt='train CSV file path', help='train CSV file path.')
+@click.option('--test', default='data\\tagrecomdata_topics220_repos152k_onehot_test.csv', prompt='test CSV file path', help='test CSV file path.')
 @click.option('--topics_column', default='labels', prompt='Topics Column name', help='The name of topics column.')
 @click.option('--readme_column', default='text', prompt='Text Column name', help='The name of readme text column.')
 @click.option('--model_output', default='fasttext_model', help='Model save path.')
@@ -23,13 +23,17 @@ def ft(train, test, topics_column, readme_column, model_output, learning_rate, e
     train = pd.read_csv(train)
     test = pd.read_csv(test)
 
+    for _, i in train.iterrows():
+        top = i[topics_column]
+
+
     def make_fasttext_train(d, file):
         __ = "\n"
         with open(file, "w") as file:
             for _, i in d.iterrows():
                 res = ""
-                for j in str(i[topics_column]).split(','):
-                    res += f'__label__{j} '
+                for j in str(i[topics_column]).strip("[]").split(' '):
+                    res += f'__label__{int(j)} '
 
                 res += f'{str(i[readme_column]).replace(__, " ")}'
                 file.write(res + '\n')
@@ -47,10 +51,11 @@ def ft(train, test, topics_column, readme_column, model_output, learning_rate, e
     test[topics_column] = test[topics_column].astype(str)
 
     def get_binary_list(topics):
-        l = [0] * len(topics_list)
-        for topic in topics.split(','):
-            l[topics_list.index(topic)] = 1
-        return l
+        # l = [0] * len(topics_list)
+        # for topic in topics.replace("[","").replace("\n","").split(' '):
+        #     l[topics_list.index(topic)] = 1
+        # return l
+        return [int(x) for x  in topics.replace("[","").replace("]","").replace("\n","").split(' ')]
 
     y_pred = []
     y_original = []
@@ -60,6 +65,7 @@ def ft(train, test, topics_column, readme_column, model_output, learning_rate, e
     for i in test[readme_column]:
         x = model.predict(i, k=-1, threshold=0)
         l = [0] * len(topics_list)
+        # topics_list_fixed = 
         for j, k in zip(x[0], x[1]):
             l[topics_list.index(j.replace("__label__", ""))] = k
         y_pred.append(l)

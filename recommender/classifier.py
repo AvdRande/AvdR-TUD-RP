@@ -1,38 +1,36 @@
-from functools import partial
-from pprint import pprint
-
 import click
 import numpy as np
 import pandas as pd
-from regex import E
-import sklearn
+from responses import target
 from scipy import stats
 import json
-import random
 import pickle
 
 from sklearn.datasets import make_multilabel_classification
-from sklearn.multioutput import MultiOutputClassifier
-from sklearn.linear_model import LogisticRegression
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.neural_network import MLPClassifier
+
+import hmc_lmlp
+import lr
 
 @click.command()
 @click.option('--trainf', default='data\\tagrecomdata_topics220_repos152k_onehot_train.csv', prompt='train CSV file path', help='train CSV file path.')
 @click.option('--testf', default='data\\tagrecomdata_topics220_repos152k_onehot_test.csv', prompt='test CSV file path', help='test CSV file path.')
-@click.option('--hierarchyf', default='recommender\\clusters.json', prompt='tag hierarchy json file path', help='tag hierarchy json file path')
+@click.option('--hierarchyf', default='recommender\\hierarchies\\best_cluster.json', prompt='tag hierarchy json file path', help='tag hierarchy json file path')
 @click.option('--labels_column', default='labels', prompt='Topics Column name', help='The name of topics column.')
 @click.option('--readme_column', default='text', prompt='Text Column name', help='The name of readme text column.')
 @click.option('--model_output', default='HMC-LMLP', help='Model save path.')
 @click.option('--learning_rate', default=0.05, help='Learning rate Value.')
 @click.option('--epoch', default=100, help='Number of Epoch.')
 @click.option('--word_ngrams', default=2, help='Number of wordNgrams.')
-def ft(trainf, testf, hierarchyf, labels_column, readme_column, model_output, learning_rate, epoch, word_ngrams):
+def classify(trainf, testf, hierarchyf, labels_column, readme_column, model_output, learning_rate, epoch, word_ngrams):
     train = pd.read_csv(trainf)
     test = pd.read_csv(testf)
 
-    train_limiter = 4000
-    test_limiter = 1000
+    hierarchy = json.load(open(hierarchyf))
+    depth = tree_depth(hierarchy)
+
+    train_limiter = 2500
+    test_limiter = 500
 
     print("Now converting training csv to features and labels")
     train_features, train_labels = df2feature_class(train, train_limiter, readme_column, labels_column)
@@ -50,80 +48,48 @@ def ft(trainf, testf, hierarchyf, labels_column, readme_column, model_output, le
 
     label_names = np.array(train.columns[:-2])
 
-    if model_output == "LR":
-        # classify using logistic regression
-        clf = MultiOutputClassifier(LogisticRegression()).fit(train_feature_vector, train_labels)
-        # result = clf.predict(train_feature_vector[:2])
-        test_predictions = clf.predict(test_feature_vector)
+    print("Start training ", model_output)
+    model = []
 
-        show_prec_rec_atn(test_predictions, test_labels)
-        
-    elif model_output == "HMC-LMLP":
-        with open(hierarchyf) as f:
-
-
-            print("Start training HMC-LMLP")
-            hierarchy = json.load(f)
-
-            # i_hier = build_idx_hierarchy(hierarchy, label_names)
-
-            # print("Building subtrees for all of the labels")
-            # label_subtrees = [labels_to_subtree(i_hier, tl) for tl in train_labels]
-
-            depth = tree_depth(hierarchy)
-            nn_layers = []
-            predictions = []
-
-            do_train = False
-            filename = 'hmc-lmlp-model.sav'
-            try:
-                with open(filename, 'rb') as model_dump:
-                    if input("Do you want to load the previous model?(y)") == "y":
-                        nn_layers = pickle.load(model_dump)
-                    else:
-                        do_train = True
-            except EnvironmentError:
+    do_train = False
+    filename = 'recommender/models/' + model_output + '-model.sav'
+    try:
+        with open(filename, 'rb') as model_dump:
+            if input("Do you want to load the previous model?(y)") == "y":
+                model = pickle.load(model_dump)
+            else:
                 do_train = True
+    except EnvironmentError:
+        do_train = True
 
-            if do_train:
-                for level in range(depth):
-                    print("Training HMC-LMLP layer ", level)
-                    # the input matrix for this neural network
-                    feature_matrix = train_feature_vector if level == 0 else predictions[level - 1]
-                    # the expected outcome for this neural network
-                    # target_labels = [labels_at_level(subtree, level) for subtree in label_subtrees] <- old method
-                    target_labels = [target_labels_at_level(binlabels_to_text(label, label_names), hierarchy, level) for label in train_labels]
-                    # how many hidden layers?
-                    n_hidden_layers = max(min(100, len(feature_matrix[0])), len(target_labels[0]))
-                    # make a new classifier for this level of the hierarchy
-                    nn_layers.append(MLPClassifier(solver='lbfgs', hidden_layer_sizes=n_hidden_layers, random_state=1, max_iter=1000))
-                    # train the neural network
-                    print("Neural network consists of three layers: ", len(feature_matrix[0]), " to ", n_hidden_layers, " to ", len(target_labels[0]))
-                    nn_layers[level].fit(feature_matrix, target_labels)
-                    # add results to predictions
-                    print("Fitting done, calculating predictions for next layer")
-                    if level < depth - 1:
-                        predictions.append(nn_layers[level].predict_proba(feature_matrix))
+    if do_train:
+        if model_output == "LR":
+            model = lr.train(train_feature_vector, train_labels)
+        if model_output == "HMC-LMLP":
+            model = hmc_lmlp.train(train_feature_vector, train_labels, hierarchy, label_names)
+        
+    if(input("Do you want to save the model?(y)") == "y"): 
+        pickle.dump(model, open(filename, 'wb'))
 
-            if(input("Do you want to save the model?(y)") == "y"): 
-                pickle.dump(nn_layers, open(filename, 'wb'))
+    print("Training done, now predicting")
 
-            print("Training done, now showing test results: ")
-            # test_predictions = nn_layers[3].predict(nn_layers[2].predict(nn_layers[1].predict(nn_layers[0].predict(test_feature_vector))))
-            intermediate_predictions = []
-            intermediate_predictions.append(nn_layers[0].predict_proba(test_feature_vector))
-            for i in range(1, depth):
-                intermediate_predictions.append(nn_layers[i].predict_proba(intermediate_predictions[-1]))
-            test_predictions = intermediate_predictions[-1]
+    test_predictions = []
 
-            # something to check, or postprocess: ensure that the hierarchical constrains are in fact obeyed
+    if model_output == "LR":
+        test_predictions = lr.predict(model[0], test_feature_vector)
+    if model_output == "HMC-LMLP":
+        test_predictions = hmc_lmlp.predict(model, test_feature_vector, depth)
 
-            show_prec_rec_atn(test_predictions, [target_labels_at_level(binlabels_to_text(test_label, label_names), hierarchy, depth-1) for test_label in test_labels], 1)
+    target_labels = test_labels
 
-            show_prec_rec_atn(test_predictions, [target_labels_at_level(binlabels_to_text(test_label, label_names), hierarchy, depth-1) for test_label in test_labels], 3)
+    if model_output == "LR":
+        target_labels = (test_labels.T[model[1]]).T
+    if model_output == "HMC-LMLP":
+        target_labels = [target_labels_at_level(binlabels_to_text(test_label, label_names), hierarchy, depth-1) for test_label in test_labels]
 
-            show_prec_rec_atn(test_predictions, [target_labels_at_level(binlabels_to_text(test_label, label_names), hierarchy, depth-1) for test_label in test_labels], 5)
-
+    for i in range(1, 6, 2):
+        show_prec_rec_atn(test_predictions, target_labels, i)
+        
 
 def show_prec_rec_atn(predictions, true_values, n):
     true_positives = 0
@@ -132,11 +98,15 @@ def show_prec_rec_atn(predictions, true_values, n):
     for i in range(len(predictions)):
         top_n_label_idxs = np.argpartition(predictions[i], -n)[-n:]
         for idx in top_n_label_idxs:
-            if true_values[idx] == 1:
+            if true_values[i][idx] == 1:
                 true_positives += 1
             else:
                 false_positives += 1
+        true_idxs = np.where(true_values == 1)
+        
+
     print("Precision@", n, ": ", true_positives / (true_positives + false_positives))
+    print("Recall@", n, ": ", true_positives / (true_positives + false_negatives))
 
 def target_labels_at_level(str_labels, hierarchy, level):
     if level == 0:
@@ -261,4 +231,4 @@ def df2feature_class(dataframe, n, feature_column, label_column):
     return df_features, np.array(df_labels)
 
 if __name__ == "__main__":
-    ft()
+    classify()
