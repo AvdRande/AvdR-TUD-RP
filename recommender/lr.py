@@ -8,9 +8,18 @@ def train(train_feature_vector, train_labels):
         if sum(col) > 0:
             used_labels.append(i)
 
-    clf = MultiOutputClassifier(LogisticRegression()).fit(train_feature_vector, (train_labels.T[used_labels]).T)
+    clf = MultiOutputClassifier(LogisticRegression(n_jobs=-1, class_weight='balanced')).fit(train_feature_vector, (train_labels.T[used_labels]).T)
 
     return [clf, np.array(used_labels)]
 
 def predict(clf, test_feature_vector):
-    return clf.predict(test_feature_vector)
+    # return clf.predict(test_feature_vector)
+    predict_classes = clf.predict_proba(test_feature_vector)
+
+    ret = np.zeros((len(predict_classes[0]), len(predict_classes)))
+
+    for y in range(len(ret)):
+        for x in range(len(ret[0])):
+            ret[y][x] = predict_classes[x][y][1]
+
+    return ret

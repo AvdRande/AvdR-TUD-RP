@@ -1,3 +1,4 @@
+import warnings
 import click
 import numpy as np
 import pandas as pd
@@ -6,8 +7,8 @@ from scipy import stats
 import json
 import pickle
 
-from sklearn.datasets import make_multilabel_classification
 from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics import roc_curve, auc
 
 import hmc_lmlp
 import lr
@@ -16,30 +17,40 @@ import lr
 @click.option('--trainf', default='data\\tagrecomdata_topics220_repos152k_onehot_train.csv', prompt='train CSV file path', help='train CSV file path.')
 @click.option('--testf', default='data\\tagrecomdata_topics220_repos152k_onehot_test.csv', prompt='test CSV file path', help='test CSV file path.')
 @click.option('--hierarchyf', default='recommender\\hierarchies\\best_cluster.json', prompt='tag hierarchy json file path', help='tag hierarchy json file path')
-@click.option('--labels_column', default='labels', prompt='Topics Column name', help='The name of topics column.')
-@click.option('--readme_column', default='text', prompt='Text Column name', help='The name of readme text column.')
-@click.option('--model_output', default='HMC-LMLP', help='Model save path.')
+@click.option('--save-or-load', prompt='Choose whether to save the model (s), load the previous model (l), or neither', help='The name of topics column.')
+@click.option('--labels_column', default='labels', help='The name of topics column.')
+@click.option('--readme_column', default='text', help='The name of readme text column.')
+@click.option('--model_output', default='LR', help='Model save path.')
 @click.option('--learning_rate', default=0.05, help='Learning rate Value.')
 @click.option('--epoch', default=100, help='Number of Epoch.')
 @click.option('--word_ngrams', default=2, help='Number of wordNgrams.')
-def classify(trainf, testf, hierarchyf, labels_column, readme_column, model_output, learning_rate, epoch, word_ngrams):
+def classify(trainf, testf, hierarchyf, save_or_load, labels_column, readme_column, model_output, learning_rate, epoch, word_ngrams):
     train = pd.read_csv(trainf)
     test = pd.read_csv(testf)
 
     hierarchy = json.load(open(hierarchyf))
     depth = tree_depth(hierarchy)
 
-    train_limiter = 2500
-    test_limiter = 500
+    train_limiter = 1000
+    test_limiter = 200
 
-    print("Now converting training csv to features and labels")
+    if save_or_load != "l":
+        print("Now converting training csv to features and labels")
     train_features, train_labels = df2feature_class(train, train_limiter, readme_column, labels_column)
     
     print("Now converting testing csv to features and labels")
     test_features, test_labels = df2feature_class(test, test_limiter, readme_column, labels_column)
 
     def features_to_vectors(features_list):
-        vectorizer = TfidfVectorizer(min_df=5, max_features=2500)
+        vectorizer = TfidfVectorizer(
+            max_features=2500,
+            stop_words='english',
+            sublinear_tf=True,
+            strip_accents='unicode',
+            analyzer='word',
+            token_pattern=r'\w{2,}',
+            ngram_range=(1, 2)
+        )
         all_features = [" ".join(f) for f in (features_list[0] + features_list[1])]
         vectors = vectorizer.fit_transform(all_features).toarray()
         return vectors[:len(features_list[0])], vectors[len(features_list[0]):]
@@ -48,14 +59,14 @@ def classify(trainf, testf, hierarchyf, labels_column, readme_column, model_outp
 
     label_names = np.array(train.columns[:-2])
 
-    print("Start training ", model_output)
     model = []
 
     do_train = False
     filename = 'recommender/models/' + model_output + '-model.sav'
     try:
         with open(filename, 'rb') as model_dump:
-            if input("Do you want to load the previous model?(y)") == "y":
+            if save_or_load == "l":
+                print("Loading previous model ", model_output)
                 model = pickle.load(model_dump)
             else:
                 do_train = True
@@ -63,22 +74,27 @@ def classify(trainf, testf, hierarchyf, labels_column, readme_column, model_outp
         do_train = True
 
     if do_train:
+        print("Start training ", model_output)
         if model_output == "LR":
             model = lr.train(train_feature_vector, train_labels)
         if model_output == "HMC-LMLP":
             model = hmc_lmlp.train(train_feature_vector, train_labels, hierarchy, label_names)
         
-    if(input("Do you want to save the model?(y)") == "y"): 
+    if save_or_load == "s": 
         pickle.dump(model, open(filename, 'wb'))
 
     print("Training done, now predicting")
 
     test_predictions = []
+    train_predictions = [] # used for Youden J threshold finding
+    train_prediction_limit = 100
 
     if model_output == "LR":
         test_predictions = lr.predict(model[0], test_feature_vector)
+        train_predictions = lr.predict(model[0], train_feature_vector[:train_prediction_limit])
     if model_output == "HMC-LMLP":
         test_predictions = hmc_lmlp.predict(model, test_feature_vector, depth)
+        train_predictions = hmc_lmlp.predict(model, train_feature_vector[:train_prediction_limit], depth)
 
     target_labels = test_labels
 
@@ -88,29 +104,57 @@ def classify(trainf, testf, hierarchyf, labels_column, readme_column, model_outp
         target_labels = [target_labels_at_level(binlabels_to_text(test_label, label_names), hierarchy, depth-1) for test_label in test_labels]
 
     for i in range(1, 6, 2):
-        show_prec_rec_atn(test_predictions, target_labels, i)
+        show_prec_rec_atn(test_predictions, target_labels, i, th_from_youden(train_labels[:train_prediction_limit], train_predictions))
         
+# extracted from https://www.kaggle.com/code/willstone98/youden-s-j-statistic-for-threshold-determination/notebook
+def th_from_youden(labels, predictions):
+    fpr = dict()
+    tpr = dict()
+    thresholds = dict()
+    roc_auc = dict()
 
-def show_prec_rec_atn(predictions, true_values, n):
-    true_positives = 0
-    false_positives = 0
-    false_negatives = 0
-    for i in range(len(predictions)):
-        top_n_label_idxs = np.argpartition(predictions[i], -n)[-n:]
-        for idx in top_n_label_idxs:
-            if true_values[i][idx] == 1:
-                true_positives += 1
-            else:
-                false_positives += 1
-        true_idxs = np.where(true_values == 1)
-        
+    n_labels = len(labels[0])
 
-    print("Precision@", n, ": ", true_positives / (true_positives + false_positives))
-    print("Recall@", n, ": ", true_positives / (true_positives + false_negatives))
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        for i in range(n_labels):
+            fpr[i], tpr[i], thresholds[i] = roc_curve(labels[:, i], predictions[:, i], drop_intermediate=False)
+            roc_auc[i] = auc(fpr[i], tpr[i])
+
+    J_stats = [None] * n_labels
+    opt_thresholds = [None] * n_labels
+
+    # Compute Youden's J Statistic for each class
+    for i in range(n_labels):
+        J_stats[i] = tpr[i] - fpr[i]
+        opt_thresholds[i] = thresholds[i][np.argmax(J_stats[i])]
+
+    return np.average(opt_thresholds)
+
+# adapted from https://surprise.readthedocs.io/en/latest/FAQ.html#how-to-compute-precision-k-and-recall-k
+def show_prec_rec_atn(predictions, true_values, n, threshold):        
+    pred_and_true = {i : list(zip(predictions[i], true_values[i])) for i in range(len(predictions))}
+
+    precisions = dict()
+    recalls = dict()
+
+    for i, tags in pred_and_true.items():
+        tags.sort(key=lambda x: x[0], reverse=True)
+
+        recommended = [(pred >= threshold) for (pred, _) in tags[:n]]
+        relevant = [(true_v == 1) for (_, true_v) in tags]
+
+        n_rel_and_rec = [((true_v == 1) and (pred >= threshold)) for (pred, true_v) in tags[:n]]
+
+        precisions[i] = sum(n_rel_and_rec) / sum(recommended) if sum(recommended) != 0 else 0
+        recalls[i] = sum(n_rel_and_rec) / sum(relevant) if sum(relevant) != 0 else 0
+
+    print("Precision@", n, ": ", sum(prec for prec in precisions.values()) / len(precisions))
+    print("Recall@", n, ": ", sum(rec for rec in recalls.values()) / len(recalls))
 
 def target_labels_at_level(str_labels, hierarchy, level):
     if level == 0:
-        # go into children and find in which children the labels are
+        # go through list of children and find for which children the labels are present
         ret = []
         if len(hierarchy["children"]) == 0:
             for tag in hierarchy["content"]:
