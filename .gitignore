@@ -5,6 +5,7 @@
 
 #
 data/
+recommender/models/
 train.txt
 test.txt
 

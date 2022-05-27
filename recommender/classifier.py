@@ -6,12 +6,19 @@ from responses import target
 from scipy import stats
 import json
 import pickle
+from os.path import exists
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics import roc_curve, auc
+# from tensorflow import keras
+import keras
+
+from helper_fun import *
 
 import hmc_lmlp
 import lr
+import awx
+import hmc_lmlp_imp
 
 @click.command()
 @click.option('--trainf', default='data\\tagrecomdata_topics220_repos152k_onehot_train.csv', prompt='train CSV file path', help='train CSV file path.')
@@ -20,19 +27,19 @@ import lr
 @click.option('--save-or-load', prompt='Choose whether to save the model (s), load the previous model (l), or neither', help='The name of topics column.')
 @click.option('--labels_column', default='labels', help='The name of topics column.')
 @click.option('--readme_column', default='text', help='The name of readme text column.')
-@click.option('--model_output', default='LR', help='Model save path.')
+@click.option('--model_type', default='AWX', help='Model save path. Options: LR, HMC-LMLP, HMC-LML-imp, AWX')
 @click.option('--learning_rate', default=0.05, help='Learning rate Value.')
 @click.option('--epoch', default=100, help='Number of Epoch.')
 @click.option('--word_ngrams', default=2, help='Number of wordNgrams.')
-def classify(trainf, testf, hierarchyf, save_or_load, labels_column, readme_column, model_output, learning_rate, epoch, word_ngrams):
+def classify(trainf, testf, hierarchyf, save_or_load, labels_column, readme_column, model_type, learning_rate, epoch, word_ngrams):
     train = pd.read_csv(trainf)
     test = pd.read_csv(testf)
 
     hierarchy = json.load(open(hierarchyf))
     depth = tree_depth(hierarchy)
 
-    train_limiter = 1000
-    test_limiter = 200
+    train_limiter = 10000
+    test_limiter = 500
 
     if save_or_load != "l":
         print("Now converting training csv to features and labels")
@@ -43,7 +50,7 @@ def classify(trainf, testf, hierarchyf, save_or_load, labels_column, readme_colu
 
     def features_to_vectors(features_list):
         vectorizer = TfidfVectorizer(
-            max_features=2500,
+            max_features=5000,
             stop_words='english',
             sublinear_tf=True,
             strip_accents='unicode',
@@ -62,50 +69,111 @@ def classify(trainf, testf, hierarchyf, save_or_load, labels_column, readme_colu
     model = []
 
     do_train = False
-    filename = 'recommender/models/' + model_output + '-model.sav'
-    try:
-        with open(filename, 'rb') as model_dump:
-            if save_or_load == "l":
-                print("Loading previous model ", model_output)
+    filename = 'recommender/models/' + model_type + '-model.sav'
+    if save_or_load == "l":
+        print("Loading previous model", model_type)
+        if model_type == "AWX":
+            model = keras.models.load_model(filename[:-4])
+        else:
+            if exists(filename):
+                model_dump = open(filename, 'rb')
                 model = pickle.load(model_dump)
-            else:
-                do_train = True
-    except EnvironmentError:
+    else:
         do_train = True
 
     if do_train:
-        print("Start training ", model_output)
-        if model_output == "LR":
+        print("Start training ", model_type)
+        if model_type == "LR":
             model = lr.train(train_feature_vector, train_labels)
-        if model_output == "HMC-LMLP":
+        if model_type == "HMC-LMLP":
             model = hmc_lmlp.train(train_feature_vector, train_labels, hierarchy, label_names)
+        if model_type == "HMC-LMLP-imp":
+            model = hmc_lmlp_imp.train(train_feature_vector, train_labels, hierarchy, label_names)
+        if model_type == "AWX":
+            model = awx.train(train_feature_vector, train_labels, hierarchy, label_names)
         
-    if save_or_load == "s": 
-        pickle.dump(model, open(filename, 'wb'))
+    if save_or_load == "s":
+        if model_type == "AWX":
+            model.save(filename[:-4])
+        else:
+            pickle.dump(model, open(filename, 'wb'))
 
     print("Training done, now predicting")
 
     test_predictions = []
-    train_predictions = [] # used for Youden J threshold finding
+    # used for Youden J threshold finding
+    train_predictions = [] 
     train_prediction_limit = 100
 
-    if model_output == "LR":
+    if model_type == "LR":
         test_predictions = lr.predict(model[0], test_feature_vector)
         train_predictions = lr.predict(model[0], train_feature_vector[:train_prediction_limit])
-    if model_output == "HMC-LMLP":
+    if model_type == "HMC-LMLP":
         test_predictions = hmc_lmlp.predict(model, test_feature_vector, depth)
         train_predictions = hmc_lmlp.predict(model, train_feature_vector[:train_prediction_limit], depth)
+    if model_type == "HMC-LMLP-imp":
+        test_predictions = hmc_lmlp_imp.predict(model, test_feature_vector, depth)
+        train_predictions = hmc_lmlp_imp.predict(model, train_feature_vector[:train_prediction_limit], depth)
+    if model_type == "AWX":
+        test_predictions = awx.predict(model, test_feature_vector)
 
     target_labels = test_labels
 
-    if model_output == "LR":
-        target_labels = (test_labels.T[model[1]]).T
-    if model_output == "HMC-LMLP":
-        target_labels = [target_labels_at_level(binlabels_to_text(test_label, label_names), hierarchy, depth-1) for test_label in test_labels]
+    from PIL import Image
+    im_data = np.zeros((len(test_predictions), len(test_predictions[0])))
+    for i in range(len(im_data)):
+        for j in range(len(im_data[0])):
+            im_data[i][j] = test_predictions[i][j] * 255
+    im = Image.fromarray(im_data).convert("L")
+    im.save("filename.jpeg")
 
-    for i in range(1, 6, 2):
-        show_prec_rec_atn(test_predictions, target_labels, i, th_from_youden(train_labels[:train_prediction_limit], train_predictions))
+    if model_type == "LR":
+        target_labels = (test_labels.T[model[1]]).T
+    if model_type == "HMC-LMLP" or model_type == "HMC-LMLP-imp":
+        target_labels = map_labels_to_tree_order(test_labels, hierarchy, label_names)
+
+    p, r, f = prf_at_k(target_labels, test_predictions, [1, 3, 5])
+
+    print(p)
+    print(r)
+    print(f)
+
+    loop_through_predictions(target_labels, test_predictions, label_names)
+
+    # for i in range(1, 6, 2):
+    #     show_prec_rec_atn(test_predictions, target_labels, i, th_from_youden(map_labels_to_tree_order(train_labels, hierarchy, label_names)[:train_prediction_limit], train_predictions))
         
+# from izadi code
+def prf_at_k(y_original, y_pred_probab, k_list):
+    r, p, f = {}, {}, {}
+    y_org_array = np.array(y_original)
+
+    for k in k_list:
+        org_label_count = np.sum(y_org_array, axis=1).tolist()
+        
+        topk_ind = np.argpartition(y_pred_probab, -1 * k, axis=1)[:, -1 * k:]
+        pred_in_orig = y_org_array[np.arange(y_org_array.shape[0])[:, None], topk_ind]
+        common_topk = np.sum(pred_in_orig, axis=1)
+        recall, precision, f1 = [], [], []
+        for index, value in enumerate(common_topk):
+            recall.append(value / min(k, org_label_count[index]))
+            precision.append(value / k)
+        r.update({'R@' + str(k): "{:.2f}".format(np.mean(recall) * 100)})
+        p.update({'P@' + str(k): "{:.2f}".format(np.mean(precision) * 100)})
+        f1 = stats.hmean([precision, recall])
+        f.update({'F1@' + str(k): "{:.2f}".format(np.mean(f1) * 100)})
+    return r, p, f
+
+def loop_through_predictions(orig, pred, names):
+    for i in range(len(orig)):
+        orig_names = [names[j] for j in range(len(orig[i])) if orig[i][j] == 1]
+        n_origs = len(orig_names)
+        ind = np.argpartition(pred[i], -n_origs)[-n_origs:]
+        pred_names = names[ind]
+        print("Original:", orig_names, " vs Predictions:", pred_names)
+        if i % 5 == 0:
+            input("Pres ENTER for more predictions")
+
 # extracted from https://www.kaggle.com/code/willstone98/youden-s-j-statistic-for-threshold-determination/notebook
 def th_from_youden(labels, predictions):
     fpr = dict()
@@ -118,7 +186,9 @@ def th_from_youden(labels, predictions):
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
         for i in range(n_labels):
-            fpr[i], tpr[i], thresholds[i] = roc_curve(labels[:, i], predictions[:, i], drop_intermediate=False)
+            label_slice = np.array(labels)[:, i]
+            pred_slice = np.array(predictions)[:, i]
+            fpr[i], tpr[i], thresholds[i] = roc_curve(label_slice, pred_slice, drop_intermediate=False)
             roc_auc[i] = auc(fpr[i], tpr[i])
 
     J_stats = [None] * n_labels
@@ -151,106 +221,6 @@ def show_prec_rec_atn(predictions, true_values, n, threshold):
 
     print("Precision@", n, ": ", sum(prec for prec in precisions.values()) / len(precisions))
     print("Recall@", n, ": ", sum(rec for rec in recalls.values()) / len(recalls))
-
-def target_labels_at_level(str_labels, hierarchy, level):
-    if level == 0:
-        # go through list of children and find for which children the labels are present
-        ret = []
-        if len(hierarchy["children"]) == 0:
-            for tag in hierarchy["content"]:
-                ret.append(1 if tag in str_labels else 0)
-        else:
-            for child in hierarchy["children"]:
-                any_label_found = False
-                for label in str_labels:
-                    if is_label_in_tree(label, child):
-                        any_label_found = True
-                ret.append(1 if any_label_found else 0)
-        return ret
-    else:
-        ret = []
-        for child in hierarchy["children"]:
-            ret += target_labels_at_level(str_labels, child, level - 1)
-        return ret
-
-def is_label_in_tree(label, hierarchy):
-    return label in hierarchy["content"] or any([is_label_in_tree(label, child) for child in hierarchy["children"]])
-
-# convert hierarchy to hierarchy of indexes of the labels
-def build_idx_hierarchy(hierarchy, label_names):
-    ret = {}
-
-    ret["name"] = hierarchy["value"]["id"]
-
-    ret["content"] = []
-    for content in hierarchy["content"]:
-        ret["content"].append(np.where(label_names == content)[0][0])
-    
-    ret["children"] = []
-    for child in hierarchy["children"]:
-        ret["children"].append(build_idx_hierarchy(child, label_names))
-
-    return ret
-
-# find the subtree in the idx hierarchy for a given labellist of a repo
-# it will have empty branches for all the parts of the tree where it doesn't "go"
-def labels_to_subtree(idx_hierarchy, labels):
-    ret = {}
-    
-    ret["name"] = idx_hierarchy["name"]
-    
-    if len(idx_hierarchy["children"]) == 0:
-        ret["content"] = [labels[idx] for idx in idx_hierarchy["content"]]
-        ret["children"] = []
-    else:
-        ret["content"] = []
-        for i in range(len(labels)):
-            if labels[i] == 1 and i in idx_hierarchy["content"]:
-                ret["content"].append(1)
-            else:
-                ret["content"].append(0)
-        
-        ret["children"] = []
-        for child in idx_hierarchy["children"]:
-            ret["children"].append(labels_to_subtree(child, labels))
-
-    return ret
-
-def tree_depth(tree):
-    if len(tree["children"]) == 0:
-        return 1
-    else:
-        return 1 + tree_depth(tree["children"][0])
-
-def labels_at_level(idx_hierarchy, level):
-    if level == 0:
-        if len(idx_hierarchy["children"]) == 0:
-            return idx_hierarchy["content"]
-        else:
-            return np.array([1 if 1 in sub["content"] else 0 for sub in idx_hierarchy["children"]])
-    if level > 0:
-        ret = []
-        for child in idx_hierarchy["children"]:
-            temp = labels_at_level(child, level - 1)
-            for t in temp:
-                ret.append(t)
-        return ret
-
-def get_leaves(hierarchy):
-    ret = []
-    if len(hierarchy["children"]) == 0:
-        return hierarchy["content"]
-    else:
-        for child in hierarchy["children"]:
-            ret += get_leaves(child)
-    return ret
-
-def binlabels_to_text(binlabels, label_names):
-    ret = []
-    for i in range(len(binlabels)):
-        if binlabels[i] == 1:
-            ret.append(label_names[i])
-    return ret
 
 def df2feature_class(dataframe, n, feature_column, label_column):
     total = n
