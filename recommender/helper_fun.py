@@ -1,3 +1,4 @@
+import numpy as np
 
 def map_labels_to_tree_order(labels, hierarchy, label_names):
     return [target_labels_at_level(binlabels_to_text(test_label, label_names), hierarchy, tree_depth(hierarchy) - 1) for test_label in labels]

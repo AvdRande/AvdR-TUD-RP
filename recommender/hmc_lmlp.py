@@ -15,7 +15,7 @@ def train(train_feature_vector, train_labels, hierarchy, label_names):
             # target_labels = [labels_at_level(subtree, level) for subtree in label_subtrees] <- old method
             target_labels = [target_labels_at_level(binlabels_to_text(label, label_names), hierarchy, level) for label in train_labels]
             # how many hidden layers?
-            n_hidden_layers = max(min(220, len(feature_matrix[0])), len(target_labels[0]))
+            n_hidden_layers = max(len(feature_matrix[0]), len(target_labels[0]))
             # make a new classifier for this level of the hierarchy
             nn_layers.append(MLPClassifier(solver='lbfgs', hidden_layer_sizes=n_hidden_layers, random_state=1, max_iter=1000, verbose=1))
             # train the neural network

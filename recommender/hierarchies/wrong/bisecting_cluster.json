@@ -1,0 +1,651 @@
+{
+    "value": {
+        "id": "root"
+    },
+    "content": [
+        "3d",
+        "ai",
+        "ajax",
+        "algorithm",
+        "android",
+        "angular",
+        "ansible",
+        "api",
+        "archlinux",
+        "arduino",
+        "atom",
+        "awesome",
+        "aws",
+        "azure",
+        "babel",
+        "bash",
+        "bioinformatics",
+        "bitcoin",
+        "blockchain",
+        "bootstrap",
+        "bot",
+        "c",
+        "cassandra",
+        "chrome",
+        "chrome-extension",
+        "cli",
+        "clojure",
+        "clojurescript",
+        "cms",
+        "compiler",
+        "composer",
+        "computer-vision",
+        "cpp",
+        "cryptocurrency",
+        "crystal",
+        "csharp",
+        "css",
+        "csv",
+        "dart",
+        "data-structures",
+        "data-visualization",
+        "database",
+        "deep-learning",
+        "discord",
+        "django",
+        "docker",
+        "documentation",
+        "dotnet",
+        "electron",
+        "elixir",
+        "elm",
+        "emacs",
+        "ember",
+        "emoji",
+        "emulator",
+        "es6",
+        "eslint",
+        "ethereum",
+        "express",
+        "firebase",
+        "firefox",
+        "firefox-extension",
+        "fish",
+        "flask",
+        "flutter",
+        "font",
+        "fortran",
+        "framework",
+        "frontend",
+        "fsharp",
+        "game-engine",
+        "gatsby",
+        "git",
+        "github",
+        "github-api",
+        "go",
+        "godot",
+        "google",
+        "google-cloud",
+        "gradle",
+        "graphql",
+        "gulp",
+        "hackathon",
+        "hacktoberfest",
+        "haskell",
+        "haxe",
+        "home-assistant",
+        "homebrew",
+        "homebridge",
+        "html",
+        "http",
+        "image-processing",
+        "ios",
+        "ipfs",
+        "java",
+        "javafx",
+        "javascript",
+        "jekyll",
+        "jenkins",
+        "jquery",
+        "json",
+        "julia",
+        "jupyter-notebook",
+        "jwt",
+        "koa",
+        "kotlin",
+        "kubernetes",
+        "laravel",
+        "latex",
+        "less",
+        "library",
+        "linux",
+        "lisp",
+        "llvm",
+        "localization",
+        "lua",
+        "machine-learning",
+        "macos",
+        "markdown",
+        "material-design",
+        "matlab",
+        "maven",
+        "minecraft",
+        "mobile",
+        "molecule",
+        "mongodb",
+        "mongoose",
+        "monitoring",
+        "mysql",
+        "nativescript",
+        "neo",
+        "neovim",
+        "nestjs",
+        "neural-network",
+        "nginx",
+        "nim",
+        "nlp",
+        "nodejs",
+        "nosql",
+        "npm",
+        "nuget",
+        "nuxt",
+        "objective-c",
+        "ocaml",
+        "opencv",
+        "opengl",
+        "operating-system",
+        "p2p",
+        "package-manager",
+        "perl",
+        "phaser",
+        "php",
+        "phpunit",
+        "postgresql",
+        "powershell",
+        "privacy",
+        "purescript",
+        "pwa",
+        "python",
+        "qt",
+        "r",
+        "racket",
+        "rails",
+        "raspberry-pi",
+        "react",
+        "react-native",
+        "redis",
+        "redux",
+        "rest-api",
+        "robotics",
+        "ruby",
+        "rust",
+        "sass",
+        "scala",
+        "scikit-learn",
+        "security",
+        "server",
+        "serverless",
+        "shell",
+        "sketch",
+        "spring-boot",
+        "sql",
+        "sqlite",
+        "storybook",
+        "styled-components",
+        "sublime-text",
+        "svelte",
+        "swift",
+        "symfony",
+        "tailwind",
+        "telegram",
+        "tensorflow",
+        "terminal",
+        "terraform",
+        "testing",
+        "threejs",
+        "twitch",
+        "twitter",
+        "typescript",
+        "ubuntu",
+        "unity",
+        "unreal-engine",
+        "uwp",
+        "vagrant",
+        "vim",
+        "virtual-reality",
+        "visual-studio-code",
+        "vue",
+        "web-components",
+        "webextension",
+        "webpack",
+        "windows",
+        "wordpress",
+        "wpf",
+        "xamarin",
+        "xcode",
+        "xml",
+        "yaml",
+        "yii",
+        "zsh",
+        "labels",
+        "text"
+    ],
+    "children": [
+        {
+            "value": {
+                "id": "lvl 0"
+            },
+            "content": [
+                "swift"
+            ],
+            "children": []
+        },
+        {
+            "value": {
+                "id": "lvl 1"
+            },
+            "content": [
+                "algorithm",
+                "aws",
+                "bootstrap",
+                "bot",
+                "c",
+                "cli",
+                "csharp",
+                "database",
+                "django",
+                "docker",
+                "electron",
+                "es6",
+                "express",
+                "flask",
+                "git",
+                "go",
+                "google",
+                "graphql",
+                "http",
+                "jquery",
+                "json",
+                "kotlin",
+                "kubernetes",
+                "laravel",
+                "linux",
+                "macos",
+                "mobile",
+                "mongodb",
+                "mysql",
+                "npm",
+                "postgresql",
+                "react-native",
+                "rest-api",
+                "ruby",
+                "security",
+                "sql",
+                "webpack",
+                "windows"
+            ],
+            "children": []
+        },
+        {
+            "value": {
+                "id": "lvl 2"
+            },
+            "content": [
+                "3d"
+            ],
+            "children": []
+        },
+        {
+            "value": {
+                "id": "lvl 3"
+            },
+            "content": [
+                "dart",
+                "dotnet",
+                "firebase",
+                "flutter",
+                "material-design",
+                "objective-c",
+                "xamarin",
+                "xcode"
+            ],
+            "children": []
+        },
+        {
+            "value": {
+                "id": "lvl 4"
+            },
+            "content": [
+                "babel",
+                "chrome-extension",
+                "cms",
+                "composer",
+                "discord",
+                "eslint",
+                "frontend",
+                "gulp",
+                "jwt",
+                "markdown",
+                "mongoose",
+                "nginx",
+                "pwa",
+                "redis",
+                "sass",
+                "scala",
+                "serverless",
+                "spring-boot",
+                "styled-components",
+                "symfony",
+                "testing",
+                "wordpress"
+            ],
+            "children": []
+        },
+        {
+            "value": {
+                "id": "lvl 5"
+            },
+            "content": [
+                "ansible",
+                "arduino",
+                "awesome",
+                "azure",
+                "chrome",
+                "csv",
+                "data-structures",
+                "data-visualization",
+                "documentation",
+                "elixir",
+                "game-engine",
+                "github-api",
+                "gradle",
+                "hacktoberfest",
+                "haskell",
+                "lua",
+                "monitoring",
+                "opengl",
+                "qt",
+                "sqlite",
+                "telegram",
+                "twitter",
+                "xml",
+                "yaml"
+            ],
+            "children": []
+        },
+        {
+            "value": {
+                "id": "lvl 6"
+            },
+            "content": [
+                "clojure"
+            ],
+            "children": []
+        },
+        {
+            "value": {
+                "id": "lvl 7"
+            },
+            "content": [
+                "terraform"
+            ],
+            "children": []
+        },
+        {
+            "value": {
+                "id": "lvl 8"
+            },
+            "content": [
+                "javafx",
+                "maven",
+                "minecraft"
+            ],
+            "children": []
+        },
+        {
+            "value": {
+                "id": "lvl 9"
+            },
+            "content": [
+                "ajax",
+                "atom",
+                "compiler",
+                "elm",
+                "ember",
+                "emoji",
+                "firefox",
+                "firefox-extension",
+                "font",
+                "gatsby",
+                "ipfs",
+                "jekyll",
+                "koa",
+                "less",
+                "localization",
+                "nativescript",
+                "nestjs",
+                "p2p",
+                "phaser",
+                "storybook",
+                "svelte",
+                "tailwind",
+                "threejs",
+                "virtual-reality",
+                "web-components",
+                "webextension"
+            ],
+            "children": []
+        },
+        {
+            "value": {
+                "id": "lvl 10"
+            },
+            "content": [
+                "phpunit",
+                "yii"
+            ],
+            "children": []
+        },
+        {
+            "value": {
+                "id": "lvl 11"
+            },
+            "content": [
+                "archlinux",
+                "bioinformatics",
+                "cassandra",
+                "crystal",
+                "emacs",
+                "emulator",
+                "fish",
+                "fortran",
+                "fsharp",
+                "godot",
+                "google-cloud",
+                "hackathon",
+                "haxe",
+                "home-assistant",
+                "homebrew",
+                "homebridge",
+                "jenkins",
+                "julia",
+                "latex",
+                "lisp",
+                "llvm",
+                "matlab",
+                "molecule",
+                "nim",
+                "nosql",
+                "ocaml",
+                "operating-system",
+                "package-manager",
+                "perl",
+                "powershell",
+                "privacy",
+                "purescript",
+                "racket",
+                "robotics",
+                "sketch",
+                "sublime-text",
+                "twitch",
+                "unreal-engine",
+                "vagrant",
+                "visual-studio-code"
+            ],
+            "children": []
+        },
+        {
+            "value": {
+                "id": "lvl 12"
+            },
+            "content": [
+                "nuget",
+                "uwp",
+                "wpf"
+            ],
+            "children": []
+        },
+        {
+            "value": {
+                "id": "lvl 13"
+            },
+            "content": [
+                "nuxt"
+            ],
+            "children": []
+        },
+        {
+            "value": {
+                "id": "lvl 14"
+            },
+            "content": [
+                "ubuntu",
+                "zsh"
+            ],
+            "children": []
+        },
+        {
+            "value": {
+                "id": "lvl 15"
+            },
+            "content": [
+                "clojurescript"
+            ],
+            "children": []
+        },
+        {
+            "value": {
+                "id": "lvl 16"
+            },
+            "content": [
+                "neo",
+                "neovim"
+            ],
+            "children": []
+        },
+        {
+            "value": {
+                "id": "lvl 17"
+            },
+            "content": [
+                "rails"
+            ],
+            "children": []
+        },
+        {
+            "value": {
+                "id": "lvl 18"
+            },
+            "content": [
+                "ai",
+                "bash",
+                "cpp",
+                "image-processing",
+                "jupyter-notebook",
+                "opencv",
+                "r",
+                "raspberry-pi",
+                "rust",
+                "scikit-learn",
+                "shell",
+                "terminal",
+                "vim"
+            ],
+            "children": []
+        },
+        {
+            "value": {
+                "id": "lvl 19"
+            },
+            "content": [
+                "unity"
+            ],
+            "children": []
+        },
+        {
+            "value": {
+                "id": "lvl 20"
+            },
+            "content": [
+                "bitcoin",
+                "blockchain",
+                "cryptocurrency",
+                "ethereum"
+            ],
+            "children": []
+        },
+        {
+            "value": {
+                "id": "lvl 21"
+            },
+            "content": [
+                "computer-vision",
+                "nlp"
+            ],
+            "children": []
+        },
+        {
+            "value": {
+                "id": "lvl 22"
+            },
+            "content": [
+                "github"
+            ],
+            "children": []
+        },
+        {
+            "value": {
+                "id": "lvl 23"
+            },
+            "content": [
+                "deep-learning",
+                "machine-learning",
+                "neural-network",
+                "tensorflow"
+            ],
+            "children": []
+        },
+        {
+            "value": {
+                "id": "lvl 24"
+            },
+            "content": [
+                "android",
+                "angular",
+                "api",
+                "css",
+                "framework",
+                "html",
+                "ios",
+                "java",
+                "javascript",
+                "library",
+                "nodejs",
+                "php",
+                "python",
+                "react",
+                "redux",
+                "server",
+                "typescript",
+                "vue"
+            ],
+            "children": []
+        }
+    ]
+}

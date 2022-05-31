@@ -19,7 +19,7 @@ def train(train_feature_vector, train_labels, hierarchy, label_names):
         ),
         keras.layers.GaussianNoise(0.1),
         keras.layers.Dense(
-            nfeatures,
+            nfeatures/2,
             activation='tanh',
             kernel_regularizer=keras.regularizers.l1_l2(l2=0, l1=0),
             name='dense_2'
@@ -42,10 +42,10 @@ def train(train_feature_vector, train_labels, hierarchy, label_names):
     model.fit(
         train_feature_vector,
         train_labels_with_parents,
-        epochs=256,
-        batch_size=32,
+        epochs=420,
+        batch_size=50,
         initial_epoch=0,
-        verbose=1,
+        verbose=2,
         callbacks=[
             keras.callbacks.EarlyStopping(patience=10, monitor='loss', mode='auto', ),
         ]
@@ -54,7 +54,7 @@ def train(train_feature_vector, train_labels, hierarchy, label_names):
 
 def predict(model, test_feature_vector):
     predict = model.predict(test_feature_vector)
-    return [row[-220:] for row in predict]
+    return [row[-220:] for row in predict] # the last 220 labels are actually the leaves
 
 def add_parents_to_labels(labels, hierarchy, label_names):
     names = [label_names[i] for i in range(len(labels)) if labels[i] == 1]

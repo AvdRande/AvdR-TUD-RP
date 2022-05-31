@@ -9,7 +9,7 @@ import pickle
 from os.path import exists
 
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics import roc_curve, auc
+from sklearn.metrics import average_precision_score, roc_curve, auc
 # from tensorflow import keras
 import keras
 
@@ -25,9 +25,9 @@ import hmc_lmlp_imp
 @click.option('--testf', default='data\\tagrecomdata_topics220_repos152k_onehot_test.csv', prompt='test CSV file path', help='test CSV file path.')
 @click.option('--hierarchyf', default='recommender\\hierarchies\\best_cluster.json', prompt='tag hierarchy json file path', help='tag hierarchy json file path')
 @click.option('--save-or-load', prompt='Choose whether to save the model (s), load the previous model (l), or neither', help='The name of topics column.')
+@click.option('--model_type', default='HMC-LMLP', prompt='Model save path. Options: LR, HMC-LMLP, HMC-LML-imp, AWX')
 @click.option('--labels_column', default='labels', help='The name of topics column.')
 @click.option('--readme_column', default='text', help='The name of readme text column.')
-@click.option('--model_type', default='AWX', help='Model save path. Options: LR, HMC-LMLP, HMC-LML-imp, AWX')
 @click.option('--learning_rate', default=0.05, help='Learning rate Value.')
 @click.option('--epoch', default=100, help='Number of Epoch.')
 @click.option('--word_ngrams', default=2, help='Number of wordNgrams.')
@@ -39,7 +39,7 @@ def classify(trainf, testf, hierarchyf, save_or_load, labels_column, readme_colu
     depth = tree_depth(hierarchy)
 
     train_limiter = 10000
-    test_limiter = 500
+    test_limiter = 2000
 
     if save_or_load != "l":
         print("Now converting training csv to features and labels")
@@ -129,8 +129,10 @@ def classify(trainf, testf, hierarchyf, save_or_load, labels_column, readme_colu
 
     if model_type == "LR":
         target_labels = (test_labels.T[model[1]]).T
-    if model_type == "HMC-LMLP" or model_type == "HMC-LMLP-imp":
+    if model_type == "HMC-LMLP" or model_type == "HMC-LMLP-imp" or model_type == "AWX":
         target_labels = map_labels_to_tree_order(test_labels, hierarchy, label_names)
+
+    print("AUPCR:", average_precision_score(target_labels, test_predictions))
 
     p, r, f = prf_at_k(target_labels, test_predictions, [1, 3, 5])
 
@@ -230,8 +232,8 @@ def df2feature_class(dataframe, n, feature_column, label_column):
     df_labels = []
     for _, row in dataframe.iterrows():
         # print(len(row[readme_column].split(" ")))
-        df_features.append(row[feature_column].split(" ")) #take first 20 features to ensure homogeniosity
-        
+        df_features.append(row[feature_column].split(" "))
+
         tlabels_list = row[label_column].strip("[]").split(" ")
         dupe = []
         for x in tlabels_list:
