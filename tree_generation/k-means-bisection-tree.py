@@ -5,21 +5,19 @@ import numpy as np
 
 n_clusters = 20
 
-matrix = json.load(open("tree_generation/json_simatrix.json"))
+matrix = json.load(open("tree_generation/co-occurence-distance.json"))
 
 headers = matrix["headers"]
 
 X = np.array([np.array(matrix[label_name]) for label_name in headers[:-2]])
 
-bisect_means = BisectingKMeans(
+cluster_idx = BisectingKMeans(
     n_clusters=n_clusters, 
-    random_state=0, 
+    random_state=0,
     init='k-means++', 
     bisecting_strategy="largest_cluster",
     n_init=16
-).fit(X)
-
-cluster_idx = bisect_means.predict(X)
+).fit_predict(X)
 
 cluster = {
     'value': {

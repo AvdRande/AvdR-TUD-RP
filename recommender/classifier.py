@@ -19,17 +19,18 @@ import hmc_lmlp
 import lr
 import awx
 import hmc_lmlp_imp
+import chmcnnh
 
 @click.command()
 @click.option('--trainf', default='data\\tagrecomdata_topics220_repos152k_onehot_train.csv', prompt='train CSV file path', help='train CSV file path.')
 @click.option('--testf', default='data\\tagrecomdata_topics220_repos152k_onehot_test.csv', prompt='test CSV file path', help='test CSV file path.')
-@click.option('--hierarchyf', default='recommender\\hierarchies\\best_cluster.json', prompt='tag hierarchy json file path', help='tag hierarchy json file path')
+@click.option('--hierarchyf', default='recommender\\hierarchies\\AC_COM_30-5v2.json', prompt='tag hierarchy json file path', help='tag hierarchy json file path')
 @click.option('--save-or-load', prompt='Choose whether to save the model (s), load the previous model (l), or neither', help='The name of topics column.')
-@click.option('--model_type', default='HMC-LMLP', prompt='Model save path. Options: LR, HMC-LMLP, HMC-LML-imp, AWX')
+@click.option('--model_type', default='C-HMCNN(h)', prompt='Model save path. Options: LR, HMC-LMLP, HMC-LML-imp, AWX, C-HMCNN(h)')
 @click.option('--labels_column', default='labels', help='The name of topics column.')
 @click.option('--readme_column', default='text', help='The name of readme text column.')
 @click.option('--learning_rate', default=0.05, help='Learning rate Value.')
-@click.option('--epoch', default=100, help='Number of Epoch.')
+@click.option('--epoch', default=10, help='Number of Epoch.')
 @click.option('--word_ngrams', default=2, help='Number of wordNgrams.')
 def classify(trainf, testf, hierarchyf, save_or_load, labels_column, readme_column, model_type, learning_rate, epoch, word_ngrams):
     train = pd.read_csv(trainf)
@@ -38,8 +39,8 @@ def classify(trainf, testf, hierarchyf, save_or_load, labels_column, readme_colu
     hierarchy = json.load(open(hierarchyf))
     depth = tree_depth(hierarchy)
 
-    train_limiter = 10000
-    test_limiter = 2000
+    train_limiter = 500
+    test_limiter = 100
 
     if save_or_load != "l":
         print("Now converting training csv to features and labels")
@@ -50,7 +51,7 @@ def classify(trainf, testf, hierarchyf, save_or_load, labels_column, readme_colu
 
     def features_to_vectors(features_list):
         vectorizer = TfidfVectorizer(
-            max_features=5000,
+            max_features=500,
             stop_words='english',
             sublinear_tf=True,
             strip_accents='unicode',
@@ -91,6 +92,8 @@ def classify(trainf, testf, hierarchyf, save_or_load, labels_column, readme_colu
             model = hmc_lmlp_imp.train(train_feature_vector, train_labels, hierarchy, label_names)
         if model_type == "AWX":
             model = awx.train(train_feature_vector, train_labels, hierarchy, label_names)
+        if model_type == "C-HMCNN(h)":
+            model = chmcnnh.train(train_feature_vector, train_labels, hierarchy, label_names, epoch)
         
     if save_or_load == "s":
         if model_type == "AWX":
@@ -107,17 +110,18 @@ def classify(trainf, testf, hierarchyf, save_or_load, labels_column, readme_colu
 
     if model_type == "LR":
         test_predictions = lr.predict(model[0], test_feature_vector)
-        train_predictions = lr.predict(model[0], train_feature_vector[:train_prediction_limit])
     if model_type == "HMC-LMLP":
         test_predictions = hmc_lmlp.predict(model, test_feature_vector, depth)
-        train_predictions = hmc_lmlp.predict(model, train_feature_vector[:train_prediction_limit], depth)
     if model_type == "HMC-LMLP-imp":
         test_predictions = hmc_lmlp_imp.predict(model, test_feature_vector, depth)
-        train_predictions = hmc_lmlp_imp.predict(model, train_feature_vector[:train_prediction_limit], depth)
     if model_type == "AWX":
         test_predictions = awx.predict(model, test_feature_vector)
+    if model_type == "C-HMCNN(h)":
+        test_predictions = chmcnnh.predict(model, test_feature_vector)
 
     target_labels = test_labels
+
+    test_predictions = np.interp(test_predictions, (test_predictions.min(), test_predictions.max()), (0, 1))
 
     from PIL import Image
     im_data = np.zeros((len(test_predictions), len(test_predictions[0])))
@@ -129,7 +133,7 @@ def classify(trainf, testf, hierarchyf, save_or_load, labels_column, readme_colu
 
     if model_type == "LR":
         target_labels = (test_labels.T[model[1]]).T
-    if model_type == "HMC-LMLP" or model_type == "HMC-LMLP-imp" or model_type == "AWX":
+    if model_type in {"HMC-LMLP", "HMC-LMLP-imp", "AWX", "C-HMCNN(h)"}:
         target_labels = map_labels_to_tree_order(test_labels, hierarchy, label_names)
 
     print("AUPCR:", average_precision_score(target_labels, test_predictions))
