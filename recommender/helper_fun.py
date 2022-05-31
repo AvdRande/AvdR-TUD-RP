@@ -1,5 +1,62 @@
 import numpy as np
 
+def add_parents_to_labels(labels, hierarchy, label_names):
+    names = [label_names[i] for i in range(len(labels)) if labels[i] == 1]
+    ret = [1]
+    next_level = hierarchy["children"]
+    leaf_labels = []
+    while len(next_level) > 0:
+        upcoming_level = []
+        for child in next_level:
+            if any(name in child["content"] for name in names):
+                ret.append(1)
+            else:
+                ret.append(0)
+            if len(child["children"]) == 0:
+                leaf_labels += [1 if label in names else 0 for label in child["content"]]
+            else:
+                upcoming_level += child["children"]
+        next_level = upcoming_level
+    ret += leaf_labels
+    return ret
+
+def make_hier_matrix(hierarchy, ret_size):
+    ret = np.zeros((ret_size, ret_size))
+    node_names = find_node_names(hierarchy)
+
+    next_level = [hierarchy]
+    while len(next_level) > 0:
+        upcoming_level = []
+        for node in next_level:
+            node_idx = node_names.index(node["value"]["uniqueId"])
+            if len(node["children"]) == 0:
+                for leaf in node["content"]:
+                    leaf_idx = node_names.index(leaf)
+                    ret[leaf_idx][node_idx] = 1
+            else:
+                for child in node["children"]:
+                    child_idx = node_names.index(child["value"]["uniqueId"])
+                    ret[child_idx][node_idx] = 1
+                upcoming_level += node["children"]
+        next_level = upcoming_level
+    return ret
+
+def find_node_names(hierarchy):
+    ret = [hierarchy["value"]["uniqueId"]]
+    next_level = hierarchy["children"]
+    leaf_labels = []
+    while len(next_level) > 0:
+        upcoming_level = []
+        for child in next_level:
+            ret.append(child["value"]["uniqueId"])
+            if len(child["children"]) == 0:
+                leaf_labels += child["content"]
+            else:
+                upcoming_level += child["children"]
+        next_level = upcoming_level
+    ret += leaf_labels
+    return ret
+
 def map_labels_to_tree_order(labels, hierarchy, label_names):
     return [target_labels_at_level(binlabels_to_text(test_label, label_names), hierarchy, tree_depth(hierarchy) - 1) for test_label in labels]
 

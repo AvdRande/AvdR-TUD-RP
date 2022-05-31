@@ -174,7 +174,7 @@ def loop_through_predictions(orig, pred, names):
         pred_names = names[ind]
         print("Original:", orig_names, " vs Predictions:", pred_names)
         if i % 5 == 0:
-            input("Pres ENTER for more predictions")
+            input("Press ENTER for more predictions")
 
 # extracted from https://www.kaggle.com/code/willstone98/youden-s-j-statistic-for-threshold-determination/notebook
 def th_from_youden(labels, predictions):

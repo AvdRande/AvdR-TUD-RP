@@ -357,3 +357,5 @@ MigrationBackup/
 tree_generation/clusters.json
 tree_generation/json_simatrix.json
 tree_generation/nt-clusters.json
+tree_generation/sedkgraph-updated.xlsx
+tree_generation/sedkgraph_distance.json
