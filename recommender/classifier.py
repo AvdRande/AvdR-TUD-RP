@@ -2,15 +2,12 @@ import warnings
 import click
 import numpy as np
 import pandas as pd
-from responses import target
 from scipy import stats
 import json
 import pickle
 from os.path import exists
 
-from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics import average_precision_score, roc_curve, auc
-# from tensorflow import keras
 import keras
 
 from helper_fun import *
@@ -26,21 +23,21 @@ import chmcnnh
 @click.option('--testf', default='data\\tagrecomdata_topics220_repos152k_onehot_test.csv', prompt='test CSV file path', help='test CSV file path.')
 @click.option('--hierarchyf', default='recommender\\hierarchies\\AC_COM_30-5v2.json', prompt='tag hierarchy json file path', help='tag hierarchy json file path')
 @click.option('--save-or-load', prompt='Choose whether to save the model (s), load the previous model (l), or neither', help='The name of topics column.')
-@click.option('--model_type', default='C-HMCNN(h)', prompt='Model save path. Options: LR, HMC-LMLP, HMC-LML-imp, AWX, C-HMCNN(h)')
+@click.option('--model_type', default='HMC-LMLP', prompt='Model save path. Options: LR, HMC-LMLP, HMC-LML-imp, AWX, C-HMCNN(h)')
 @click.option('--labels_column', default='labels', help='The name of topics column.')
 @click.option('--readme_column', default='text', help='The name of readme text column.')
 @click.option('--learning_rate', default=0.05, help='Learning rate Value.')
-@click.option('--epoch', default=10, help='Number of Epoch.')
+@click.option('--epochs', default=256, help='Number of Epoch.')
 @click.option('--word_ngrams', default=2, help='Number of wordNgrams.')
-def classify(trainf, testf, hierarchyf, save_or_load, labels_column, readme_column, model_type, learning_rate, epoch, word_ngrams):
+def classify(trainf, testf, hierarchyf, save_or_load, labels_column, readme_column, model_type, learning_rate, epochs, word_ngrams):
     train = pd.read_csv(trainf)
     test = pd.read_csv(testf)
 
     hierarchy = json.load(open(hierarchyf))
     depth = tree_depth(hierarchy)
 
-    train_limiter = 500
-    test_limiter = 100
+    train_limiter = 10000
+    test_limiter = 2000
 
     if save_or_load != "l":
         print("Now converting training csv to features and labels")
@@ -48,20 +45,6 @@ def classify(trainf, testf, hierarchyf, save_or_load, labels_column, readme_colu
     
     print("Now converting testing csv to features and labels")
     test_features, test_labels = df2feature_class(test, test_limiter, readme_column, labels_column)
-
-    def features_to_vectors(features_list):
-        vectorizer = TfidfVectorizer(
-            max_features=500,
-            stop_words='english',
-            sublinear_tf=True,
-            strip_accents='unicode',
-            analyzer='word',
-            token_pattern=r'\w{2,}',
-            ngram_range=(1, 2)
-        )
-        all_features = [" ".join(f) for f in (features_list[0] + features_list[1])]
-        vectors = vectorizer.fit_transform(all_features).toarray()
-        return vectors[:len(features_list[0])], vectors[len(features_list[0]):]
 
     train_feature_vector, test_feature_vector = features_to_vectors([train_features, test_features])
 
@@ -82,20 +65,25 @@ def classify(trainf, testf, hierarchyf, save_or_load, labels_column, readme_colu
     else:
         do_train = True
 
+    rec = None
+    if model_type == "LR":
+        rec = lr
+    if model_type == "HMC-LMLP":
+        rec = hmc_lmlp
+    if model_type == "HMC-LMLP-imp":
+        rec = hmc_lmlp_imp
+    if model_type == "AWX":
+        rec = awx
+    if model_type == "C-HMCNN(h)":
+        rec = chmcnnh
+
     if do_train:
         print("Start training ", model_type)
-        if model_type == "LR":
-            model = lr.train(train_feature_vector, train_labels)
-        if model_type == "HMC-LMLP":
-            model = hmc_lmlp.train(train_feature_vector, train_labels, hierarchy, label_names)
-        if model_type == "HMC-LMLP-imp":
-            model = hmc_lmlp_imp.train(train_feature_vector, train_labels, hierarchy, label_names)
-        if model_type == "AWX":
-            model = awx.train(train_feature_vector, train_labels, hierarchy, label_names)
-        if model_type == "C-HMCNN(h)":
-            model = chmcnnh.train(train_feature_vector, train_labels, hierarchy, label_names, epoch)
-        
+        rec.train(train_feature_vector, train_labels, hierarchy, label_names, epochs)
+     
+
     if save_or_load == "s":
+        # rec.save(filename)
         if model_type == "AWX":
             model.save(filename[:-4])
         else:
@@ -104,20 +92,8 @@ def classify(trainf, testf, hierarchyf, save_or_load, labels_column, readme_colu
     print("Training done, now predicting")
 
     test_predictions = []
-    # used for Youden J threshold finding
-    train_predictions = [] 
-    train_prediction_limit = 100
 
-    if model_type == "LR":
-        test_predictions = lr.predict(model[0], test_feature_vector)
-    if model_type == "HMC-LMLP":
-        test_predictions = hmc_lmlp.predict(model, test_feature_vector, depth)
-    if model_type == "HMC-LMLP-imp":
-        test_predictions = hmc_lmlp_imp.predict(model, test_feature_vector, depth)
-    if model_type == "AWX":
-        test_predictions = awx.predict(model, test_feature_vector)
-    if model_type == "C-HMCNN(h)":
-        test_predictions = chmcnnh.predict(model, test_feature_vector)
+    test_predictions = rec.predict(model, test_feature_vector, depth)
 
     target_labels = test_labels
 
@@ -148,27 +124,6 @@ def classify(trainf, testf, hierarchyf, save_or_load, labels_column, readme_colu
 
     # for i in range(1, 6, 2):
     #     show_prec_rec_atn(test_predictions, target_labels, i, th_from_youden(map_labels_to_tree_order(train_labels, hierarchy, label_names)[:train_prediction_limit], train_predictions))
-        
-# from izadi code
-def prf_at_k(y_original, y_pred_probab, k_list):
-    r, p, f = {}, {}, {}
-    y_org_array = np.array(y_original)
-
-    for k in k_list:
-        org_label_count = np.sum(y_org_array, axis=1).tolist()
-        
-        topk_ind = np.argpartition(y_pred_probab, -1 * k, axis=1)[:, -1 * k:]
-        pred_in_orig = y_org_array[np.arange(y_org_array.shape[0])[:, None], topk_ind]
-        common_topk = np.sum(pred_in_orig, axis=1)
-        recall, precision, f1 = [], [], []
-        for index, value in enumerate(common_topk):
-            recall.append(value / min(k, org_label_count[index]))
-            precision.append(value / k)
-        r.update({'R@' + str(k): "{:.2f}".format(np.mean(recall) * 100)})
-        p.update({'P@' + str(k): "{:.2f}".format(np.mean(precision) * 100)})
-        f1 = stats.hmean([precision, recall])
-        f.update({'F1@' + str(k): "{:.2f}".format(np.mean(f1) * 100)})
-    return r, p, f
 
 def loop_through_predictions(orig, pred, names):
     for i in range(len(orig)):

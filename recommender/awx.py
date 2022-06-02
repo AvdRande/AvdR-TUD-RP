@@ -6,7 +6,7 @@ from tensorflow import keras
 from helper_fun import *
 
 # mostly copied from AWX/awx_example.py
-def train(train_feature_vector, train_labels, hierarchy, label_names):
+def train(train_feature_vector, train_labels, hierarchy, label_names, nepochs):
     print("Building AWX model")
     train_labels_with_parents = np.array([add_parents_to_labels(train_label, hierarchy, label_names) for train_label in train_labels]) # this is very slow atm, no surprise
     hierarchy_matrix = make_hier_matrix(hierarchy, len(train_labels_with_parents[0]))
@@ -44,7 +44,7 @@ def train(train_feature_vector, train_labels, hierarchy, label_names):
     model.fit(
         train_feature_vector,
         train_labels_with_parents,
-        epochs=420,
+        epochs=nepochs,
         batch_size=50,
         initial_epoch=0,
         verbose=2,
@@ -54,6 +54,9 @@ def train(train_feature_vector, train_labels, hierarchy, label_names):
     )
     return model
 
-def predict(model, test_feature_vector):
+def predict(model, test_feature_vector, depth):
     predictions = model.predict(test_feature_vector)
     return [row[-220:] for row in predictions] # the last 220 labels are actually the leaves
+
+def get_name():
+    return "AWX"

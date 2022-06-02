@@ -70,7 +70,7 @@ def train(train_feature_vector, train_labels, hierarchy, label_names, epochs):
             optimizer.step()
     return model
 
-def predict(model, test_feature_vector):  
+def predict(model, test_feature_vector, depth):  
     device = torch.device("cuda:" + str(0) if torch.cuda.is_available() else "cpu")
     predictions = []
     for i, x in enumerate(torch.from_numpy(test_feature_vector)):
@@ -131,3 +131,6 @@ def get_constr_out(x, R):
     R_batch = R.expand(len(x),R.shape[1], R.shape[1])
     final_out, _ = torch.max(R_batch*c_out.double(), dim = 2)
     return final_out
+
+def get_name():
+    return "C-HMCCN(h)"

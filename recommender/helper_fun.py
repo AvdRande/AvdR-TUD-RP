@@ -1,4 +1,29 @@
+from sklearn.feature_extraction.text import TfidfVectorizer
 import numpy as np
+from scipy import stats
+
+        
+# from izadi code
+def prf_at_k(y_original, y_pred_probab, k_list):
+    r, p, f = {}, {}, {}
+    y_org_array = np.array(y_original)
+
+    for k in k_list:
+        org_label_count = np.sum(y_org_array, axis=1).tolist()
+        
+        topk_ind = np.argpartition(y_pred_probab, -1 * k, axis=1)[:, -1 * k:]
+        pred_in_orig = y_org_array[np.arange(y_org_array.shape[0])[:, None], topk_ind]
+        common_topk = np.sum(pred_in_orig, axis=1)
+        recall, precision, f1 = [], [], []
+        for index, value in enumerate(common_topk):
+            recall.append(value / min(k, org_label_count[index]))
+            precision.append(value / k)
+        r.update({'R@' + str(k): "{:.2f}".format(np.mean(recall) * 100)})
+        p.update({'P@' + str(k): "{:.2f}".format(np.mean(precision) * 100)})
+        f1 = stats.hmean([precision, recall])
+        f.update({'F@' + str(k): "{:.2f}".format(np.mean(f1) * 100)})
+    return r, p, f
+
 
 def add_parents_to_labels(labels, hierarchy, label_names):
     names = [label_names[i] for i in range(len(labels)) if labels[i] == 1]
@@ -159,3 +184,17 @@ def binlabels_to_text(binlabels, label_names):
         if binlabels[i] == 1:
             ret.append(label_names[i])
     return ret
+
+def features_to_vectors(features_list, n_features=5000):
+    vectorizer = TfidfVectorizer(
+        max_features=n_features,
+        stop_words='english',
+        sublinear_tf=True,
+        strip_accents='unicode',
+        analyzer='word',
+        token_pattern=r'\w{2,}',
+        ngram_range=(1, 2)
+    )
+    all_features = [" ".join(f) for f in (features_list[0] + features_list[1])]
+    vectors = vectorizer.fit_transform(all_features).toarray()
+    return vectors[:len(features_list[0])], vectors[len(features_list[0]):]

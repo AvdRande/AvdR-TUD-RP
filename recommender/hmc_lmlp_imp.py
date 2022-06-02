@@ -2,7 +2,7 @@ import numpy as np
 from helper_fun import tree_depth, target_labels_at_level, binlabels_to_text
 from sklearn.neural_network import MLPClassifier
 
-def train(train_feature_vector, train_labels, hierarchy, label_names):
+def train(train_feature_vector, train_labels, hierarchy, label_names, epochs):
     nn_layers = []
     predictions = []
     
@@ -18,7 +18,7 @@ def train(train_feature_vector, train_labels, hierarchy, label_names):
             # how many hidden layers?
             n_hidden_layers = len(train_feature_vector)
             # make a new classifier for this level of the hierarchy
-            nn_layers.append(MLPClassifier(solver='lbfgs', activation='logistic', hidden_layer_sizes=n_hidden_layers, random_state=1, max_iter=1000, verbose=True))
+            nn_layers.append(MLPClassifier(solver='lbfgs', activation='logistic', hidden_layer_sizes=n_hidden_layers, random_state=1, max_iter=epochs, verbose=True))
             # train the neural network
             print("Neural network consists of three layers: ", len(feature_matrix[0]), " to ", n_hidden_layers, " to ", len(target_labels[0]))
             nn_layers[level].fit(feature_matrix, target_labels)
@@ -34,3 +34,6 @@ def predict(model, test_feature_vector, depth ):
     for i in range(1, depth):
         intermediate_predictions.append(model[i].predict(np.concatenate((intermediate_predictions[-1], test_feature_vector), axis=1)))
     return intermediate_predictions[-1]
+
+def get_name():
+    return "HMC-LMLP-imp"
