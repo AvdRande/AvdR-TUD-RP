@@ -6,12 +6,16 @@ from tensorflow import keras
 from helper_fun import *
 
 # mostly copied from AWX/awx_example.py
+
+
 def train(train_feature_vector, train_labels, hierarchy, label_names, nepochs):
     print("Building AWX model")
-    train_labels_with_parents = np.array([add_parents_to_labels(train_label, hierarchy, label_names) for train_label in train_labels]) # this is very slow atm, no surprise
-    hierarchy_matrix = make_hier_matrix(hierarchy, len(train_labels_with_parents[0]))
+    train_labels_with_parents = np.array([add_parents_to_labels(
+        train_label, hierarchy, label_names) for train_label in train_labels])  # this is very slow atm, no surprise
+    hierarchy_matrix = make_hier_matrix(
+        hierarchy, len(train_labels_with_parents[0]))
     nfeatures = len(train_feature_vector[0])
-    
+
     model = keras.models.Sequential([
         keras.layers.Dense(
             nfeatures,
@@ -28,10 +32,10 @@ def train(train_feature_vector, train_labels, hierarchy, label_names, nepochs):
         ),
         keras.layers.GaussianNoise(0.1),
         AWX(
-            A=hierarchy_matrix, 
-            n_norm=1, 
-            activation='sigmoid', 
-            kernel_regularizer=keras.regularizers.l1_l2(l1=0, l2=1e-6), 
+            A=hierarchy_matrix,
+            n_norm=1,
+            activation='sigmoid',
+            kernel_regularizer=keras.regularizers.l1_l2(l1=0, l2=1e-6),
             name='AWX'
         )
     ], "AWXClassifier")
@@ -49,14 +53,18 @@ def train(train_feature_vector, train_labels, hierarchy, label_names, nepochs):
         initial_epoch=0,
         verbose=2,
         callbacks=[
-            keras.callbacks.EarlyStopping(patience=10, monitor='loss', mode='auto', ),
+            keras.callbacks.EarlyStopping(
+                patience=10, monitor='loss', mode='auto', ),
         ]
     )
     return model
 
+
 def predict(model, test_feature_vector, depth):
     predictions = model.predict(test_feature_vector)
-    return [row[-220:] for row in predictions] # the last 220 labels are actually the leaves
+    # the last 220 labels are actually the leaves
+    return [row[-220:] for row in predictions]
+
 
 def get_name():
     return "AWX"

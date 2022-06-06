@@ -1,13 +1,14 @@
 import json
-import helper_fun
-from helper_fun import get_lvlsizes_from_tree
+from helper_fun import make_hierarchy_mapping
+
 
 def main():
     print("test")
     hierarchyf = "recommender\\hierarchies\\AC_COM_30-5v2.json"
     hierarchy = json.load(open(hierarchyf))
 
-    print(get_lvlsizes_from_tree(hierarchy))
+    print(make_hierarchy_mapping(hierarchy))
+
 
 if __name__ == "__main__":
     main()

@@ -3,7 +3,7 @@ import numpy as np
 from scipy import stats
 import torch
 
-        
+
 def make_hierarchy_mapping(hierarchy):
     label_names = hierarchy["content"]
     ret = [-1] * len(label_names)
@@ -16,15 +16,18 @@ def make_hierarchy_mapping(hierarchy):
     return ret
 
 # from izadi code
+
+
 def prf_at_k(y_original, y_pred_probab, k_list):
     r, p, f = {}, {}, {}
     y_org_array = np.array(y_original)
 
     for k in k_list:
         org_label_count = np.sum(y_org_array, axis=1).tolist()
-        
+
         topk_ind = np.argpartition(y_pred_probab, -1 * k, axis=1)[:, -1 * k:]
-        pred_in_orig = y_org_array[np.arange(y_org_array.shape[0])[:, None], topk_ind]
+        pred_in_orig = y_org_array[np.arange(y_org_array.shape[0])[
+            :, None], topk_ind]
         common_topk = np.sum(pred_in_orig, axis=1)
         recall, precision, f1 = [], [], []
         for index, value in enumerate(common_topk):
@@ -57,6 +60,7 @@ def add_parents_to_labels(labels, hierarchy, label_names):
     ret += leaf_labels
     return ret
 
+
 def make_anc_matrix(hierarchy, ret_size):
     ret = np.zeros((ret_size, ret_size))
 
@@ -69,15 +73,16 @@ def make_anc_matrix(hierarchy, ret_size):
         return desc
 
     for i in range(ret_size):
-        descendants = get_descendants(i) 
+        descendants = get_descendants(i)
         if descendants:
             ret[i, descendants] = 1
 
     ret = torch.tensor(ret)
-    #Transpose to get the ancestors for each node 
+    # Transpose to get the ancestors for each node
     ret = ret.transpose(1, 0)
 
     return ret
+
 
 def make_hier_matrix(hierarchy, ret_size):
     ret = np.zeros((ret_size, ret_size))
@@ -100,6 +105,7 @@ def make_hier_matrix(hierarchy, ret_size):
         next_level = upcoming_level
     return ret
 
+
 def find_node_names(hierarchy):
     ret = [hierarchy["value"]["uniqueId"]]
     next_level = hierarchy["children"]
@@ -116,6 +122,7 @@ def find_node_names(hierarchy):
     ret += leaf_labels
     return ret
 
+
 def get_lvlsizes_from_tree(hierarchy):
     ret = []
     cur_level = hierarchy["children"]
@@ -127,8 +134,10 @@ def get_lvlsizes_from_tree(hierarchy):
         cur_level = next_level
     return ret
 
+
 def map_labels_to_tree_order(labels, hierarchy, label_names):
     return [target_labels_at_level(binlabels_to_text(test_label, label_names), hierarchy, tree_depth(hierarchy) - 1) for test_label in labels]
+
 
 def target_labels_at_level(str_labels, hierarchy, level):
     if level == 0:
@@ -151,10 +160,13 @@ def target_labels_at_level(str_labels, hierarchy, level):
             ret += target_labels_at_level(str_labels, child, level - 1)
         return ret
 
+
 def is_label_in_tree(label, hierarchy):
     return label in hierarchy["content"] or any([is_label_in_tree(label, child) for child in hierarchy["children"]])
 
 # convert hierarchy to hierarchy of indexes of the labels
+
+
 def build_idx_hierarchy(hierarchy, label_names):
     ret = {}
 
@@ -163,7 +175,7 @@ def build_idx_hierarchy(hierarchy, label_names):
     ret["content"] = []
     for content in hierarchy["content"]:
         ret["content"].append(np.where(label_names == content)[0][0])
-    
+
     ret["children"] = []
     for child in hierarchy["children"]:
         ret["children"].append(build_idx_hierarchy(child, label_names))
@@ -172,11 +184,13 @@ def build_idx_hierarchy(hierarchy, label_names):
 
 # find the subtree in the idx hierarchy for a given labellist of a repo
 # it will have empty branches for all the parts of the tree where it doesn't "go"
+
+
 def labels_to_subtree(idx_hierarchy, labels):
     ret = {}
-    
+
     ret["name"] = idx_hierarchy["name"]
-    
+
     if len(idx_hierarchy["children"]) == 0:
         ret["content"] = [labels[idx] for idx in idx_hierarchy["content"]]
         ret["children"] = []
@@ -187,18 +201,20 @@ def labels_to_subtree(idx_hierarchy, labels):
                 ret["content"].append(1)
             else:
                 ret["content"].append(0)
-        
+
         ret["children"] = []
         for child in idx_hierarchy["children"]:
             ret["children"].append(labels_to_subtree(child, labels))
 
     return ret
 
+
 def tree_depth(tree):
     if len(tree["children"]) == 0:
         return 1
     else:
         return 1 + tree_depth(tree["children"][0])
+
 
 def labels_at_level(idx_hierarchy, level):
     if level == 0:
@@ -214,6 +230,7 @@ def labels_at_level(idx_hierarchy, level):
                 ret.append(t)
         return ret
 
+
 def get_leaves(hierarchy):
     ret = []
     if len(hierarchy["children"]) == 0:
@@ -223,12 +240,14 @@ def get_leaves(hierarchy):
             ret += get_leaves(child)
     return ret
 
+
 def binlabels_to_text(binlabels, label_names):
     ret = []
     for i in range(len(binlabels)):
         if binlabels[i] == 1:
             ret.append(label_names[i])
     return ret
+
 
 def features_to_vectors(features_list, n_features=5000):
     vectorizer = TfidfVectorizer(
