@@ -17,17 +17,18 @@ import lr
 import awx
 import hmc_lmlp_imp
 import chmcnnh
+import hmcnf
 
 @click.command()
 @click.option('--trainf', default='data\\tagrecomdata_topics220_repos152k_onehot_train.csv', prompt='train CSV file path', help='train CSV file path.')
 @click.option('--testf', default='data\\tagrecomdata_topics220_repos152k_onehot_test.csv', prompt='test CSV file path', help='test CSV file path.')
 @click.option('--hierarchyf', default='recommender\\hierarchies\\AC_COM_30-5v2.json', prompt='tag hierarchy json file path', help='tag hierarchy json file path')
 @click.option('--save-or-load', prompt='Choose whether to save the model (s), load the previous model (l), or neither', help='The name of topics column.')
-@click.option('--model_type', default='HMC-LMLP', prompt='Model save path. Options: LR, HMC-LMLP, HMC-LML-imp, AWX, C-HMCNN(h)')
+@click.option('--model_type', default='HMCN-F', prompt='Model save path. Options: LR, HMC-LMLP, HMC-LML-imp, HMCN-F, AWX, C-HMCNN(h)')
 @click.option('--labels_column', default='labels', help='The name of topics column.')
 @click.option('--readme_column', default='text', help='The name of readme text column.')
 @click.option('--learning_rate', default=0.05, help='Learning rate Value.')
-@click.option('--epochs', default=256, help='Number of Epoch.')
+@click.option('--epochs', default=128, help='Number of Epoch.')
 @click.option('--word_ngrams', default=2, help='Number of wordNgrams.')
 def classify(trainf, testf, hierarchyf, save_or_load, labels_column, readme_column, model_type, learning_rate, epochs, word_ngrams):
     train = pd.read_csv(trainf)
@@ -36,8 +37,8 @@ def classify(trainf, testf, hierarchyf, save_or_load, labels_column, readme_colu
     hierarchy = json.load(open(hierarchyf))
     depth = tree_depth(hierarchy)
 
-    train_limiter = 10000
-    test_limiter = 2000
+    train_limiter = 2500
+    test_limiter = 500
 
     if save_or_load != "l":
         print("Now converting training csv to features and labels")
@@ -46,7 +47,7 @@ def classify(trainf, testf, hierarchyf, save_or_load, labels_column, readme_colu
     print("Now converting testing csv to features and labels")
     test_features, test_labels = df2feature_class(test, test_limiter, readme_column, labels_column)
 
-    train_feature_vector, test_feature_vector = features_to_vectors([train_features, test_features])
+    train_feature_vector, test_feature_vector = features_to_vectors([train_features, test_features], n_features=2500)
 
     label_names = np.array(train.columns[:-2])
 
@@ -72,6 +73,8 @@ def classify(trainf, testf, hierarchyf, save_or_load, labels_column, readme_colu
         rec = hmc_lmlp
     if model_type == "HMC-LMLP-imp":
         rec = hmc_lmlp_imp
+    if model_type == "HMCN-F":
+        rec = hmcnf
     if model_type == "AWX":
         rec = awx
     if model_type == "C-HMCNN(h)":
@@ -79,7 +82,7 @@ def classify(trainf, testf, hierarchyf, save_or_load, labels_column, readme_colu
 
     if do_train:
         print("Start training ", model_type)
-        rec.train(train_feature_vector, train_labels, hierarchy, label_names, epochs)
+        model = rec.train(train_feature_vector, train_labels, hierarchy, label_names, epochs)
      
 
     if save_or_load == "s":
@@ -97,7 +100,7 @@ def classify(trainf, testf, hierarchyf, save_or_load, labels_column, readme_colu
 
     target_labels = test_labels
 
-    test_predictions = np.interp(test_predictions, (test_predictions.min(), test_predictions.max()), (0, 1))
+    # test_predictions = np.interp(test_predictions, (test_predictions.min(), test_predictions.max()), (0, 1))
 
     from PIL import Image
     im_data = np.zeros((len(test_predictions), len(test_predictions[0])))
@@ -109,7 +112,7 @@ def classify(trainf, testf, hierarchyf, save_or_load, labels_column, readme_colu
 
     if model_type == "LR":
         target_labels = (test_labels.T[model[1]]).T
-    if model_type in {"HMC-LMLP", "HMC-LMLP-imp", "AWX", "C-HMCNN(h)"}:
+    if model_type in {"HMC-LMLP", "HMC-LMLP-imp", "HMCN-F", "AWX", "C-HMCNN(h)"}:
         target_labels = map_labels_to_tree_order(test_labels, hierarchy, label_names)
 
     print("AUPCR:", average_precision_score(target_labels, test_predictions))

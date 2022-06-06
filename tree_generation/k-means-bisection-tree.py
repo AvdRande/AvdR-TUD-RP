@@ -5,7 +5,7 @@ import numpy as np
 
 n_clusters = [130, 60, 20]
 
-matrix = json.load(open("tree_generation/sedkgraph_distance.json"))
+matrix = json.load(open("tree_generation/co-occurence-distance.json"))
 
 headers = matrix["headers"]
 
@@ -67,7 +67,7 @@ for cluster in clusters:
 
 # repeat party for highest tier hierarchy
 
-next_next_clusters = [None] * n_clusters[1]
+next_next_clusters = [None] * n_clusters[2]
 
 for cluster in next_clusters:
     c_idx = cluster['value']['id']

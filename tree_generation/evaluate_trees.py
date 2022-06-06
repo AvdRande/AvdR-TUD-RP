@@ -1,7 +1,7 @@
 import json
 # from recommender.helper_fun import *
 
-ag_simatrix_tree = json.load(open("recommender\\hierarchies\\four_hier\\COM-BK.json"))
+ag_simatrix_tree = json.load(open("recommender\\hierarchies\\four_hier\\SKG-BK.json"))
 
 def get_clusters_at_level(tree, level):
     ret = []

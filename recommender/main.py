@@ -1,9 +1,13 @@
+import json
+import helper_fun
+from helper_fun import get_lvlsizes_from_tree
 
-if __name__ == "main":
-    print("welcome to recommender party")
+def main():
+    print("test")
+    hierarchyf = "recommender\\hierarchies\\AC_COM_30-5v2.json"
+    hierarchy = json.load(open(hierarchyf))
 
-    # train, test or recommend?
-    
-    # for training, training data and model?
-    # for testing, trained model and testing data?
-    # for recommending, trained model and untagged repo
+    print(get_lvlsizes_from_tree(hierarchy))
+
+if __name__ == "__main__":
+    main()
