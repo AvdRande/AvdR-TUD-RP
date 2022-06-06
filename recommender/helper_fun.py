@@ -4,6 +4,17 @@ from scipy import stats
 import torch
 
         
+def make_hierarchy_mapping(hierarchy):
+    label_names = hierarchy["content"]
+    ret = [-1] * len(label_names)
+
+    leaf_names = get_leaves(hierarchy)
+
+    for i in range(len(leaf_names)):
+        ret[i] = leaf_names.index(label_names[i])
+
+    return ret
+
 # from izadi code
 def prf_at_k(y_original, y_pred_probab, k_list):
     r, p, f = {}, {}, {}

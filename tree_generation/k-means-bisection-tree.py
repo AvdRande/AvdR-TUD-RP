@@ -5,13 +5,13 @@ import numpy as np
 
 n_clusters = [130, 60, 20]
 
-matrix = json.load(open("tree_generation/co-occurence-distance.json"))
+matrix = json.load(open("tree_generation/sedkgraph_distance.json"))
 
-headers = matrix["headers"]
+headers = matrix["headers"][:220]
 
-X = np.array([np.array(matrix[label_name]) for label_name in headers[:-2]])
+X = np.array([np.array(matrix[label_name]) for label_name in headers])
 
-cluster_idxs = [[i] for i in range(len(headers[:-2]))]
+cluster_idxs = [[i] for i in range(len(headers))]
 
 for cluster_size in n_clusters:
     cluster_idx = BisectingKMeans(
@@ -90,7 +90,7 @@ final_cluster = {
         'id': 0,
         'uniqueId': 'root'
     },
-    'content': headers[:-2],
+    'content': headers,
     'children': next_next_clusters
 }
 

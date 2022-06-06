@@ -1,4 +1,5 @@
 {
+    "name": "SKG-BK",
     "value": {
         "id": 0,
         "uniqueId": "root"
@@ -221,7 +222,9 @@
         "xamarin",
         "xcode",
         "xml",
-        "yaml"
+        "yaml",
+        "yii",
+        "zsh"
     ],
     "children": [
         {
@@ -230,16 +233,16 @@
                 "uniqueId": "lvl0-0"
             },
             "content": [
-                "dotnet",
-                "wpf",
-                "framework",
-                "game-engine",
-                "sketch",
-                "storybook",
-                "qt",
-                "mobile",
-                "xamarin",
-                "flutter"
+                "jwt",
+                "rest-api",
+                "ipfs",
+                "p2p",
+                "nginx",
+                "chrome",
+                "twitter",
+                "chrome-extension",
+                "server",
+                "font"
             ],
             "children": [
                 {
@@ -248,10 +251,10 @@
                         "uniqueId": "lvl1-0"
                     },
                     "content": [
-                        "dotnet",
-                        "wpf",
-                        "framework",
-                        "game-engine"
+                        "jwt",
+                        "rest-api",
+                        "ipfs",
+                        "p2p"
                     ],
                     "children": [
                         {
@@ -260,8 +263,8 @@
                                 "uniqueId": "lvl2-0"
                             },
                             "content": [
-                                "dotnet",
-                                "wpf"
+                                "jwt",
+                                "rest-api"
                             ],
                             "children": []
                         },
@@ -271,8 +274,8 @@
                                 "uniqueId": "lvl2-1"
                             },
                             "content": [
-                                "framework",
-                                "game-engine"
+                                "ipfs",
+                                "p2p"
                             ],
                             "children": []
                         }
@@ -284,12 +287,11 @@
                         "uniqueId": "lvl1-1"
                     },
                     "content": [
-                        "sketch",
-                        "storybook",
-                        "qt",
-                        "mobile",
-                        "xamarin",
-                        "flutter"
+                        "nginx",
+                        "chrome",
+                        "twitter",
+                        "chrome-extension",
+                        "server"
                     ],
                     "children": [
                         {
@@ -298,8 +300,7 @@
                                 "uniqueId": "lvl2-2"
                             },
                             "content": [
-                                "sketch",
-                                "storybook"
+                                "nginx"
                             ],
                             "children": []
                         },
@@ -309,7 +310,8 @@
                                 "uniqueId": "lvl2-3"
                             },
                             "content": [
-                                "qt"
+                                "chrome",
+                                "twitter"
                             ],
                             "children": []
                         },
@@ -319,8 +321,7 @@
                                 "uniqueId": "lvl2-4"
                             },
                             "content": [
-                                "mobile",
-                                "xamarin"
+                                "chrome-extension"
                             ],
                             "children": []
                         },
@@ -330,7 +331,28 @@
                                 "uniqueId": "lvl2-5"
                             },
                             "content": [
-                                "flutter"
+                                "server"
+                            ],
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "value": {
+                        "id": 2,
+                        "uniqueId": "lvl1-2"
+                    },
+                    "content": [
+                        "font"
+                    ],
+                    "children": [
+                        {
+                            "value": {
+                                "id": 6,
+                                "uniqueId": "lvl2-6"
+                            },
+                            "content": [
+                                "font"
                             ],
                             "children": []
                         }
@@ -344,60 +366,38 @@
                 "uniqueId": "lvl0-1"
             },
             "content": [
-                "graphql",
-                "symfony",
-                "wordpress",
-                "gatsby",
-                "vue",
-                "spring-boot",
-                "javascript",
-                "frontend",
-                "html",
-                "nativescript",
-                "electron",
-                "llvm",
-                "php",
-                "nodejs",
-                "react",
-                "redux",
-                "ajax",
-                "gulp",
-                "webpack",
-                "eslint"
+                "data-structures",
+                "nosql",
+                "sqlite",
+                "emulator",
+                "minecraft",
+                "zsh",
+                "documentation",
+                "yaml",
+                "latex"
             ],
             "children": [
                 {
                     "value": {
-                        "id": 2,
-                        "uniqueId": "lvl1-2"
+                        "id": 3,
+                        "uniqueId": "lvl1-3"
                     },
                     "content": [
-                        "graphql",
-                        "symfony",
-                        "wordpress",
-                        "gatsby",
-                        "vue",
-                        "spring-boot"
+                        "data-structures",
+                        "nosql",
+                        "sqlite",
+                        "emulator",
+                        "minecraft"
                     ],
                     "children": [
-                        {
-                            "value": {
-                                "id": 6,
-                                "uniqueId": "lvl2-6"
-                            },
-                            "content": [
-                                "graphql"
-                            ],
-                            "children": []
-                        },
                         {
                             "value": {
                                 "id": 7,
                                 "uniqueId": "lvl2-7"
                             },
                             "content": [
-                                "symfony",
-                                "wordpress"
+                                "data-structures",
+                                "nosql"
                             ],
                             "children": []
                         },
@@ -407,8 +407,7 @@
                                 "uniqueId": "lvl2-8"
                             },
                             "content": [
-                                "gatsby",
-                                "vue"
+                                "sqlite"
                             ],
                             "children": []
                         },
@@ -418,63 +417,8 @@
                                 "uniqueId": "lvl2-9"
                             },
                             "content": [
-                                "spring-boot"
-                            ],
-                            "children": []
-                        }
-                    ]
-                },
-                {
-                    "value": {
-                        "id": 3,
-                        "uniqueId": "lvl1-3"
-                    },
-                    "content": [
-                        "javascript",
-                        "frontend",
-                        "html",
-                        "nativescript",
-                        "electron"
-                    ],
-                    "children": [
-                        {
-                            "value": {
-                                "id": 10,
-                                "uniqueId": "lvl2-10"
-                            },
-                            "content": [
-                                "javascript"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 11,
-                                "uniqueId": "lvl2-11"
-                            },
-                            "content": [
-                                "frontend",
-                                "html"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 12,
-                                "uniqueId": "lvl2-12"
-                            },
-                            "content": [
-                                "nativescript"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 13,
-                                "uniqueId": "lvl2-13"
-                            },
-                            "content": [
-                                "electron"
+                                "emulator",
+                                "minecraft"
                             ],
                             "children": []
                         }
@@ -486,97 +430,40 @@
                         "uniqueId": "lvl1-4"
                     },
                     "content": [
-                        "llvm",
-                        "php"
+                        "zsh",
+                        "documentation",
+                        "yaml",
+                        "latex"
                     ],
                     "children": [
                         {
                             "value": {
-                                "id": 14,
-                                "uniqueId": "lvl2-14"
+                                "id": 10,
+                                "uniqueId": "lvl2-10"
                             },
                             "content": [
-                                "llvm",
-                                "php"
-                            ],
-                            "children": []
-                        }
-                    ]
-                },
-                {
-                    "value": {
-                        "id": 5,
-                        "uniqueId": "lvl1-5"
-                    },
-                    "content": [
-                        "nodejs",
-                        "react",
-                        "redux"
-                    ],
-                    "children": [
-                        {
-                            "value": {
-                                "id": 15,
-                                "uniqueId": "lvl2-15"
-                            },
-                            "content": [
-                                "nodejs",
-                                "react"
+                                "zsh"
                             ],
                             "children": []
                         },
                         {
                             "value": {
-                                "id": 16,
-                                "uniqueId": "lvl2-16"
+                                "id": 11,
+                                "uniqueId": "lvl2-11"
                             },
                             "content": [
-                                "redux"
-                            ],
-                            "children": []
-                        }
-                    ]
-                },
-                {
-                    "value": {
-                        "id": 6,
-                        "uniqueId": "lvl1-6"
-                    },
-                    "content": [
-                        "ajax",
-                        "gulp",
-                        "webpack",
-                        "eslint"
-                    ],
-                    "children": [
-                        {
-                            "value": {
-                                "id": 17,
-                                "uniqueId": "lvl2-17"
-                            },
-                            "content": [
-                                "ajax"
+                                "documentation",
+                                "yaml"
                             ],
                             "children": []
                         },
                         {
                             "value": {
-                                "id": 18,
-                                "uniqueId": "lvl2-18"
+                                "id": 12,
+                                "uniqueId": "lvl2-12"
                             },
                             "content": [
-                                "gulp",
-                                "webpack"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 19,
-                                "uniqueId": "lvl2-19"
-                            },
-                            "content": [
-                                "eslint"
+                                "latex"
                             ],
                             "children": []
                         }
@@ -590,234 +477,141 @@
                 "uniqueId": "lvl0-2"
             },
             "content": [
-                "express",
-                "svelte",
-                "angular",
-                "nuxt",
-                "react-native",
-                "ember",
-                "bootstrap",
-                "css",
-                "firebase",
-                "django",
-                "flask",
-                "laravel",
-                "jekyll",
-                "rails",
-                "tailwind",
-                "koa",
-                "nestjs",
-                "phaser"
+                "ethereum",
+                "homebridge",
+                "redis",
+                "postgresql",
+                "blockchain",
+                "cryptocurrency",
+                "google-cloud",
+                "twitch",
+                "git",
+                "aws",
+                "azure",
+                "archlinux"
             ],
             "children": [
+                {
+                    "value": {
+                        "id": 5,
+                        "uniqueId": "lvl1-5"
+                    },
+                    "content": [
+                        "ethereum",
+                        "homebridge",
+                        "redis",
+                        "postgresql"
+                    ],
+                    "children": [
+                        {
+                            "value": {
+                                "id": 13,
+                                "uniqueId": "lvl2-13"
+                            },
+                            "content": [
+                                "ethereum"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 14,
+                                "uniqueId": "lvl2-14"
+                            },
+                            "content": [
+                                "homebridge",
+                                "redis"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 15,
+                                "uniqueId": "lvl2-15"
+                            },
+                            "content": [
+                                "postgresql"
+                            ],
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "value": {
+                        "id": 6,
+                        "uniqueId": "lvl1-6"
+                    },
+                    "content": [
+                        "blockchain",
+                        "cryptocurrency"
+                    ],
+                    "children": [
+                        {
+                            "value": {
+                                "id": 16,
+                                "uniqueId": "lvl2-16"
+                            },
+                            "content": [
+                                "blockchain",
+                                "cryptocurrency"
+                            ],
+                            "children": []
+                        }
+                    ]
+                },
                 {
                     "value": {
                         "id": 7,
                         "uniqueId": "lvl1-7"
                     },
                     "content": [
-                        "express",
-                        "svelte"
+                        "google-cloud",
+                        "twitch",
+                        "git",
+                        "aws",
+                        "azure",
+                        "archlinux"
                     ],
                     "children": [
+                        {
+                            "value": {
+                                "id": 17,
+                                "uniqueId": "lvl2-17"
+                            },
+                            "content": [
+                                "google-cloud",
+                                "twitch"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 18,
+                                "uniqueId": "lvl2-18"
+                            },
+                            "content": [
+                                "git"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 19,
+                                "uniqueId": "lvl2-19"
+                            },
+                            "content": [
+                                "aws",
+                                "azure"
+                            ],
+                            "children": []
+                        },
                         {
                             "value": {
                                 "id": 20,
                                 "uniqueId": "lvl2-20"
                             },
                             "content": [
-                                "express",
-                                "svelte"
-                            ],
-                            "children": []
-                        }
-                    ]
-                },
-                {
-                    "value": {
-                        "id": 8,
-                        "uniqueId": "lvl1-8"
-                    },
-                    "content": [
-                        "angular",
-                        "nuxt",
-                        "react-native",
-                        "ember",
-                        "bootstrap"
-                    ],
-                    "children": [
-                        {
-                            "value": {
-                                "id": 21,
-                                "uniqueId": "lvl2-21"
-                            },
-                            "content": [
-                                "angular"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 22,
-                                "uniqueId": "lvl2-22"
-                            },
-                            "content": [
-                                "nuxt",
-                                "react-native"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 23,
-                                "uniqueId": "lvl2-23"
-                            },
-                            "content": [
-                                "ember"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 24,
-                                "uniqueId": "lvl2-24"
-                            },
-                            "content": [
-                                "bootstrap"
-                            ],
-                            "children": []
-                        }
-                    ]
-                },
-                {
-                    "value": {
-                        "id": 9,
-                        "uniqueId": "lvl1-9"
-                    },
-                    "content": [
-                        "css"
-                    ],
-                    "children": [
-                        {
-                            "value": {
-                                "id": 25,
-                                "uniqueId": "lvl2-25"
-                            },
-                            "content": [
-                                "css"
-                            ],
-                            "children": []
-                        }
-                    ]
-                },
-                {
-                    "value": {
-                        "id": 10,
-                        "uniqueId": "lvl1-10"
-                    },
-                    "content": [
-                        "firebase"
-                    ],
-                    "children": [
-                        {
-                            "value": {
-                                "id": 26,
-                                "uniqueId": "lvl2-26"
-                            },
-                            "content": [
-                                "firebase"
-                            ],
-                            "children": []
-                        }
-                    ]
-                },
-                {
-                    "value": {
-                        "id": 11,
-                        "uniqueId": "lvl1-11"
-                    },
-                    "content": [
-                        "django",
-                        "flask",
-                        "laravel"
-                    ],
-                    "children": [
-                        {
-                            "value": {
-                                "id": 27,
-                                "uniqueId": "lvl2-27"
-                            },
-                            "content": [
-                                "django",
-                                "flask"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 28,
-                                "uniqueId": "lvl2-28"
-                            },
-                            "content": [
-                                "laravel"
-                            ],
-                            "children": []
-                        }
-                    ]
-                },
-                {
-                    "value": {
-                        "id": 12,
-                        "uniqueId": "lvl1-12"
-                    },
-                    "content": [
-                        "jekyll",
-                        "rails",
-                        "tailwind",
-                        "koa",
-                        "nestjs",
-                        "phaser"
-                    ],
-                    "children": [
-                        {
-                            "value": {
-                                "id": 29,
-                                "uniqueId": "lvl2-29"
-                            },
-                            "content": [
-                                "jekyll",
-                                "rails"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 30,
-                                "uniqueId": "lvl2-30"
-                            },
-                            "content": [
-                                "tailwind"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 31,
-                                "uniqueId": "lvl2-31"
-                            },
-                            "content": [
-                                "koa",
-                                "nestjs"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 32,
-                                "uniqueId": "lvl2-32"
-                            },
-                            "content": [
-                                "phaser"
+                                "archlinux"
                             ],
                             "children": []
                         }
@@ -831,52 +625,43 @@
                 "uniqueId": "lvl0-3"
             },
             "content": [
-                "atom",
-                "babel",
-                "clojurescript",
-                "phpunit"
+                "bitcoin",
+                "csv",
+                "hackathon",
+                "hacktoberfest"
             ],
             "children": [
                 {
                     "value": {
-                        "id": 13,
-                        "uniqueId": "lvl1-13"
+                        "id": 8,
+                        "uniqueId": "lvl1-8"
                     },
                     "content": [
-                        "atom",
-                        "babel",
-                        "clojurescript",
-                        "phpunit"
+                        "bitcoin",
+                        "csv",
+                        "hackathon",
+                        "hacktoberfest"
                     ],
                     "children": [
                         {
                             "value": {
-                                "id": 33,
-                                "uniqueId": "lvl2-33"
+                                "id": 21,
+                                "uniqueId": "lvl2-21"
                             },
                             "content": [
-                                "atom"
+                                "bitcoin",
+                                "csv"
                             ],
                             "children": []
                         },
                         {
                             "value": {
-                                "id": 34,
-                                "uniqueId": "lvl2-34"
+                                "id": 22,
+                                "uniqueId": "lvl2-22"
                             },
                             "content": [
-                                "babel",
-                                "clojurescript"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 35,
-                                "uniqueId": "lvl2-35"
-                            },
-                            "content": [
-                                "phpunit"
+                                "hackathon",
+                                "hacktoberfest"
                             ],
                             "children": []
                         }
@@ -890,92 +675,25 @@
                 "uniqueId": "lvl0-4"
             },
             "content": [
-                "pwa",
-                "styled-components",
-                "jquery",
-                "less",
-                "threejs",
-                "javafx",
-                "discord",
-                "firefox-extension"
+                "awesome"
             ],
             "children": [
                 {
                     "value": {
-                        "id": 14,
-                        "uniqueId": "lvl1-14"
+                        "id": 9,
+                        "uniqueId": "lvl1-9"
                     },
                     "content": [
-                        "pwa",
-                        "styled-components",
-                        "jquery",
-                        "less",
-                        "threejs",
-                        "javafx"
+                        "awesome"
                     ],
                     "children": [
                         {
                             "value": {
-                                "id": 36,
-                                "uniqueId": "lvl2-36"
+                                "id": 23,
+                                "uniqueId": "lvl2-23"
                             },
                             "content": [
-                                "pwa",
-                                "styled-components"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 37,
-                                "uniqueId": "lvl2-37"
-                            },
-                            "content": [
-                                "jquery",
-                                "less"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 38,
-                                "uniqueId": "lvl2-38"
-                            },
-                            "content": [
-                                "threejs"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 39,
-                                "uniqueId": "lvl2-39"
-                            },
-                            "content": [
-                                "javafx"
-                            ],
-                            "children": []
-                        }
-                    ]
-                },
-                {
-                    "value": {
-                        "id": 15,
-                        "uniqueId": "lvl1-15"
-                    },
-                    "content": [
-                        "discord",
-                        "firefox-extension"
-                    ],
-                    "children": [
-                        {
-                            "value": {
-                                "id": 40,
-                                "uniqueId": "lvl2-40"
-                            },
-                            "content": [
-                                "discord",
-                                "firefox-extension"
+                                "awesome"
                             ],
                             "children": []
                         }
@@ -989,55 +707,153 @@
                 "uniqueId": "lvl0-5"
             },
             "content": [
-                "serverless",
-                "markdown",
-                "material-design",
-                "sass",
-                "web-components"
+                "mongoose",
+                "home-assistant",
+                "maven",
+                "terraform",
+                "ansible",
+                "kubernetes",
+                "c",
+                "cpp",
+                "java",
+                "python",
+                "mysql",
+                "ubuntu",
+                "neo"
             ],
             "children": [
                 {
                     "value": {
-                        "id": 16,
-                        "uniqueId": "lvl1-16"
+                        "id": 10,
+                        "uniqueId": "lvl1-10"
                     },
                     "content": [
-                        "serverless",
-                        "markdown",
-                        "material-design",
-                        "sass",
-                        "web-components"
+                        "mongoose",
+                        "home-assistant",
+                        "maven",
+                        "terraform",
+                        "ansible",
+                        "kubernetes"
                     ],
                     "children": [
                         {
                             "value": {
-                                "id": 41,
-                                "uniqueId": "lvl2-41"
+                                "id": 24,
+                                "uniqueId": "lvl2-24"
                             },
                             "content": [
-                                "serverless"
+                                "mongoose"
                             ],
                             "children": []
                         },
                         {
                             "value": {
-                                "id": 42,
-                                "uniqueId": "lvl2-42"
+                                "id": 25,
+                                "uniqueId": "lvl2-25"
                             },
                             "content": [
-                                "markdown",
-                                "material-design"
+                                "home-assistant",
+                                "maven"
                             ],
                             "children": []
                         },
                         {
                             "value": {
-                                "id": 43,
-                                "uniqueId": "lvl2-43"
+                                "id": 26,
+                                "uniqueId": "lvl2-26"
                             },
                             "content": [
-                                "sass",
-                                "web-components"
+                                "terraform"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 27,
+                                "uniqueId": "lvl2-27"
+                            },
+                            "content": [
+                                "ansible",
+                                "kubernetes"
+                            ],
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "value": {
+                        "id": 11,
+                        "uniqueId": "lvl1-11"
+                    },
+                    "content": [
+                        "c",
+                        "cpp",
+                        "java",
+                        "python"
+                    ],
+                    "children": [
+                        {
+                            "value": {
+                                "id": 28,
+                                "uniqueId": "lvl2-28"
+                            },
+                            "content": [
+                                "c",
+                                "cpp"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 29,
+                                "uniqueId": "lvl2-29"
+                            },
+                            "content": [
+                                "java"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 30,
+                                "uniqueId": "lvl2-30"
+                            },
+                            "content": [
+                                "python"
+                            ],
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "value": {
+                        "id": 12,
+                        "uniqueId": "lvl1-12"
+                    },
+                    "content": [
+                        "mysql",
+                        "ubuntu",
+                        "neo"
+                    ],
+                    "children": [
+                        {
+                            "value": {
+                                "id": 31,
+                                "uniqueId": "lvl2-31"
+                            },
+                            "content": [
+                                "mysql",
+                                "ubuntu"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 32,
+                                "uniqueId": "lvl2-32"
+                            },
+                            "content": [
+                                "neo"
                             ],
                             "children": []
                         }
@@ -1051,497 +867,32 @@
                 "uniqueId": "lvl0-6"
             },
             "content": [
-                "robotics",
-                "computer-vision",
-                "neural-network",
-                "bioinformatics",
-                "nlp",
-                "data-visualization",
-                "raspberry-pi",
-                "3d",
-                "virtual-reality",
-                "ai",
-                "deep-learning",
-                "opencv",
-                "scikit-learn",
-                "tensorflow",
-                "library",
-                "jupyter-notebook",
-                "machine-learning",
-                "image-processing"
-            ],
-            "children": [
-                {
-                    "value": {
-                        "id": 17,
-                        "uniqueId": "lvl1-17"
-                    },
-                    "content": [
-                        "robotics",
-                        "computer-vision",
-                        "neural-network",
-                        "bioinformatics",
-                        "nlp",
-                        "data-visualization"
-                    ],
-                    "children": [
-                        {
-                            "value": {
-                                "id": 44,
-                                "uniqueId": "lvl2-44"
-                            },
-                            "content": [
-                                "robotics"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 45,
-                                "uniqueId": "lvl2-45"
-                            },
-                            "content": [
-                                "computer-vision"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 46,
-                                "uniqueId": "lvl2-46"
-                            },
-                            "content": [
-                                "neural-network"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 47,
-                                "uniqueId": "lvl2-47"
-                            },
-                            "content": [
-                                "bioinformatics",
-                                "nlp"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 48,
-                                "uniqueId": "lvl2-48"
-                            },
-                            "content": [
-                                "data-visualization"
-                            ],
-                            "children": []
-                        }
-                    ]
-                },
-                {
-                    "value": {
-                        "id": 18,
-                        "uniqueId": "lvl1-18"
-                    },
-                    "content": [
-                        "raspberry-pi"
-                    ],
-                    "children": [
-                        {
-                            "value": {
-                                "id": 49,
-                                "uniqueId": "lvl2-49"
-                            },
-                            "content": [
-                                "raspberry-pi"
-                            ],
-                            "children": []
-                        }
-                    ]
-                },
-                {
-                    "value": {
-                        "id": 19,
-                        "uniqueId": "lvl1-19"
-                    },
-                    "content": [
-                        "3d",
-                        "virtual-reality"
-                    ],
-                    "children": [
-                        {
-                            "value": {
-                                "id": 50,
-                                "uniqueId": "lvl2-50"
-                            },
-                            "content": [
-                                "3d",
-                                "virtual-reality"
-                            ],
-                            "children": []
-                        }
-                    ]
-                },
-                {
-                    "value": {
-                        "id": 20,
-                        "uniqueId": "lvl1-20"
-                    },
-                    "content": [
-                        "ai",
-                        "deep-learning",
-                        "opencv",
-                        "scikit-learn",
-                        "tensorflow"
-                    ],
-                    "children": [
-                        {
-                            "value": {
-                                "id": 51,
-                                "uniqueId": "lvl2-51"
-                            },
-                            "content": [
-                                "ai",
-                                "deep-learning"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 52,
-                                "uniqueId": "lvl2-52"
-                            },
-                            "content": [
-                                "opencv"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 53,
-                                "uniqueId": "lvl2-53"
-                            },
-                            "content": [
-                                "scikit-learn",
-                                "tensorflow"
-                            ],
-                            "children": []
-                        }
-                    ]
-                },
-                {
-                    "value": {
-                        "id": 21,
-                        "uniqueId": "lvl1-21"
-                    },
-                    "content": [
-                        "library",
-                        "jupyter-notebook",
-                        "machine-learning",
-                        "image-processing"
-                    ],
-                    "children": [
-                        {
-                            "value": {
-                                "id": 54,
-                                "uniqueId": "lvl2-54"
-                            },
-                            "content": [
-                                "library"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 55,
-                                "uniqueId": "lvl2-55"
-                            },
-                            "content": [
-                                "jupyter-notebook",
-                                "machine-learning"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 56,
-                                "uniqueId": "lvl2-56"
-                            },
-                            "content": [
-                                "image-processing"
-                            ],
-                            "children": []
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "value": {
-                "id": 7,
-                "uniqueId": "lvl0-7"
-            },
-            "content": [
-                "bot",
-                "emoji",
-                "privacy",
-                "security",
-                "api",
-                "telegram",
-                "http",
-                "database",
-                "sql",
-                "json",
-                "xml",
-                "mongodb",
-                "webextension",
-                "opengl"
-            ],
-            "children": [
-                {
-                    "value": {
-                        "id": 22,
-                        "uniqueId": "lvl1-22"
-                    },
-                    "content": [
-                        "bot",
-                        "emoji"
-                    ],
-                    "children": [
-                        {
-                            "value": {
-                                "id": 57,
-                                "uniqueId": "lvl2-57"
-                            },
-                            "content": [
-                                "bot",
-                                "emoji"
-                            ],
-                            "children": []
-                        }
-                    ]
-                },
-                {
-                    "value": {
-                        "id": 23,
-                        "uniqueId": "lvl1-23"
-                    },
-                    "content": [
-                        "privacy",
-                        "security",
-                        "api",
-                        "telegram",
-                        "http"
-                    ],
-                    "children": [
-                        {
-                            "value": {
-                                "id": 58,
-                                "uniqueId": "lvl2-58"
-                            },
-                            "content": [
-                                "privacy",
-                                "security"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 59,
-                                "uniqueId": "lvl2-59"
-                            },
-                            "content": [
-                                "api",
-                                "telegram"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 60,
-                                "uniqueId": "lvl2-60"
-                            },
-                            "content": [
-                                "http"
-                            ],
-                            "children": []
-                        }
-                    ]
-                },
-                {
-                    "value": {
-                        "id": 24,
-                        "uniqueId": "lvl1-24"
-                    },
-                    "content": [
-                        "database",
-                        "sql"
-                    ],
-                    "children": [
-                        {
-                            "value": {
-                                "id": 61,
-                                "uniqueId": "lvl2-61"
-                            },
-                            "content": [
-                                "database",
-                                "sql"
-                            ],
-                            "children": []
-                        }
-                    ]
-                },
-                {
-                    "value": {
-                        "id": 25,
-                        "uniqueId": "lvl1-25"
-                    },
-                    "content": [
-                        "json",
-                        "xml",
-                        "mongodb",
-                        "webextension",
-                        "opengl"
-                    ],
-                    "children": [
-                        {
-                            "value": {
-                                "id": 62,
-                                "uniqueId": "lvl2-62"
-                            },
-                            "content": [
-                                "json",
-                                "xml"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 63,
-                                "uniqueId": "lvl2-63"
-                            },
-                            "content": [
-                                "mongodb",
-                                "webextension"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 64,
-                                "uniqueId": "lvl2-64"
-                            },
-                            "content": [
-                                "opengl"
-                            ],
-                            "children": []
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "value": {
-                "id": 8,
-                "uniqueId": "lvl0-8"
-            },
-            "content": [
-                "operating-system",
-                "unity",
-                "ios",
-                "windows",
-                "firefox",
-                "godot",
-                "unreal-engine",
                 "android",
+                "godot",
+                "unity",
+                "unreal-engine",
+                "operating-system",
+                "windows",
                 "linux",
                 "macos"
             ],
             "children": [
                 {
                     "value": {
-                        "id": 26,
-                        "uniqueId": "lvl1-26"
+                        "id": 13,
+                        "uniqueId": "lvl1-13"
                     },
                     "content": [
-                        "operating-system",
-                        "unity",
-                        "ios",
-                        "windows",
-                        "firefox"
-                    ],
-                    "children": [
-                        {
-                            "value": {
-                                "id": 65,
-                                "uniqueId": "lvl2-65"
-                            },
-                            "content": [
-                                "operating-system"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 66,
-                                "uniqueId": "lvl2-66"
-                            },
-                            "content": [
-                                "unity"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 67,
-                                "uniqueId": "lvl2-67"
-                            },
-                            "content": [
-                                "ios",
-                                "windows"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 68,
-                                "uniqueId": "lvl2-68"
-                            },
-                            "content": [
-                                "firefox"
-                            ],
-                            "children": []
-                        }
-                    ]
-                },
-                {
-                    "value": {
-                        "id": 27,
-                        "uniqueId": "lvl1-27"
-                    },
-                    "content": [
-                        "godot",
-                        "unreal-engine",
                         "android",
-                        "linux",
-                        "macos"
+                        "godot",
+                        "unity",
+                        "unreal-engine"
                     ],
                     "children": [
                         {
                             "value": {
-                                "id": 69,
-                                "uniqueId": "lvl2-69"
-                            },
-                            "content": [
-                                "godot",
-                                "unreal-engine"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 70,
-                                "uniqueId": "lvl2-70"
+                                "id": 33,
+                                "uniqueId": "lvl2-33"
                             },
                             "content": [
                                 "android"
@@ -1550,8 +901,54 @@
                         },
                         {
                             "value": {
-                                "id": 71,
-                                "uniqueId": "lvl2-71"
+                                "id": 34,
+                                "uniqueId": "lvl2-34"
+                            },
+                            "content": [
+                                "godot",
+                                "unity"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 35,
+                                "uniqueId": "lvl2-35"
+                            },
+                            "content": [
+                                "unreal-engine"
+                            ],
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "value": {
+                        "id": 14,
+                        "uniqueId": "lvl1-14"
+                    },
+                    "content": [
+                        "operating-system",
+                        "windows",
+                        "linux",
+                        "macos"
+                    ],
+                    "children": [
+                        {
+                            "value": {
+                                "id": 36,
+                                "uniqueId": "lvl2-36"
+                            },
+                            "content": [
+                                "operating-system",
+                                "windows"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 37,
+                                "uniqueId": "lvl2-37"
                             },
                             "content": [
                                 "linux",
@@ -1565,64 +962,61 @@
         },
         {
             "value": {
-                "id": 9,
-                "uniqueId": "lvl0-9"
+                "id": 7,
+                "uniqueId": "lvl0-7"
             },
             "content": [
-                "python",
-                "c",
-                "cpp",
-                "java",
-                "home-assistant",
-                "maven",
-                "ansible",
-                "terraform",
-                "mongoose",
-                "mysql",
-                "neo",
-                "ubuntu"
+                "monitoring",
+                "testing",
+                "google",
+                "github",
+                "github-api",
+                "docker",
+                "powershell"
             ],
             "children": [
                 {
                     "value": {
-                        "id": 28,
-                        "uniqueId": "lvl1-28"
+                        "id": 15,
+                        "uniqueId": "lvl1-15"
                     },
                     "content": [
-                        "python",
-                        "c",
-                        "cpp",
-                        "java"
+                        "monitoring",
+                        "testing",
+                        "google",
+                        "github",
+                        "github-api"
                     ],
                     "children": [
                         {
                             "value": {
-                                "id": 72,
-                                "uniqueId": "lvl2-72"
+                                "id": 38,
+                                "uniqueId": "lvl2-38"
                             },
                             "content": [
-                                "python"
+                                "monitoring",
+                                "testing"
                             ],
                             "children": []
                         },
                         {
                             "value": {
-                                "id": 73,
-                                "uniqueId": "lvl2-73"
+                                "id": 39,
+                                "uniqueId": "lvl2-39"
                             },
                             "content": [
-                                "c",
-                                "cpp"
+                                "google"
                             ],
                             "children": []
                         },
                         {
                             "value": {
-                                "id": 74,
-                                "uniqueId": "lvl2-74"
+                                "id": 40,
+                                "uniqueId": "lvl2-40"
                             },
                             "content": [
-                                "java"
+                                "github",
+                                "github-api"
                             ],
                             "children": []
                         }
@@ -1630,46 +1024,104 @@
                 },
                 {
                     "value": {
-                        "id": 29,
-                        "uniqueId": "lvl1-29"
+                        "id": 16,
+                        "uniqueId": "lvl1-16"
                     },
                     "content": [
-                        "home-assistant",
-                        "maven",
-                        "ansible",
-                        "terraform",
-                        "mongoose"
+                        "docker",
+                        "powershell"
                     ],
                     "children": [
                         {
                             "value": {
-                                "id": 75,
-                                "uniqueId": "lvl2-75"
+                                "id": 41,
+                                "uniqueId": "lvl2-41"
                             },
                             "content": [
-                                "home-assistant",
-                                "maven"
+                                "docker",
+                                "powershell"
+                            ],
+                            "children": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "value": {
+                "id": 8,
+                "uniqueId": "lvl0-8"
+            },
+            "content": [
+                "firefox",
+                "bash",
+                "fish",
+                "terminal",
+                "homebrew",
+                "nuget",
+                "compiler",
+                "composer",
+                "cms",
+                "package-manager",
+                "cli",
+                "shell",
+                "gradle",
+                "vagrant",
+                "jenkins",
+                "molecule"
+            ],
+            "children": [
+                {
+                    "value": {
+                        "id": 17,
+                        "uniqueId": "lvl1-17"
+                    },
+                    "content": [
+                        "firefox",
+                        "bash",
+                        "fish",
+                        "terminal",
+                        "homebrew"
+                    ],
+                    "children": [
+                        {
+                            "value": {
+                                "id": 42,
+                                "uniqueId": "lvl2-42"
+                            },
+                            "content": [
+                                "firefox"
                             ],
                             "children": []
                         },
                         {
                             "value": {
-                                "id": 76,
-                                "uniqueId": "lvl2-76"
+                                "id": 43,
+                                "uniqueId": "lvl2-43"
                             },
                             "content": [
-                                "ansible",
-                                "terraform"
+                                "bash",
+                                "fish"
                             ],
                             "children": []
                         },
                         {
                             "value": {
-                                "id": 77,
-                                "uniqueId": "lvl2-77"
+                                "id": 44,
+                                "uniqueId": "lvl2-44"
                             },
                             "content": [
-                                "mongoose"
+                                "terminal"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 45,
+                                "uniqueId": "lvl2-45"
+                            },
+                            "content": [
+                                "homebrew"
                             ],
                             "children": []
                         }
@@ -1677,24 +1129,225 @@
                 },
                 {
                     "value": {
-                        "id": 30,
-                        "uniqueId": "lvl1-30"
+                        "id": 18,
+                        "uniqueId": "lvl1-18"
                     },
                     "content": [
-                        "mysql",
-                        "neo",
-                        "ubuntu"
+                        "nuget",
+                        "compiler",
+                        "composer",
+                        "cms",
+                        "package-manager"
                     ],
                     "children": [
                         {
                             "value": {
-                                "id": 78,
-                                "uniqueId": "lvl2-78"
+                                "id": 46,
+                                "uniqueId": "lvl2-46"
                             },
                             "content": [
-                                "mysql",
-                                "neo",
-                                "ubuntu"
+                                "nuget"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 47,
+                                "uniqueId": "lvl2-47"
+                            },
+                            "content": [
+                                "compiler",
+                                "composer"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 48,
+                                "uniqueId": "lvl2-48"
+                            },
+                            "content": [
+                                "cms",
+                                "package-manager"
+                            ],
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "value": {
+                        "id": 19,
+                        "uniqueId": "lvl1-19"
+                    },
+                    "content": [
+                        "cli",
+                        "shell"
+                    ],
+                    "children": [
+                        {
+                            "value": {
+                                "id": 49,
+                                "uniqueId": "lvl2-49"
+                            },
+                            "content": [
+                                "cli",
+                                "shell"
+                            ],
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "value": {
+                        "id": 20,
+                        "uniqueId": "lvl1-20"
+                    },
+                    "content": [
+                        "gradle",
+                        "vagrant",
+                        "jenkins",
+                        "molecule"
+                    ],
+                    "children": [
+                        {
+                            "value": {
+                                "id": 50,
+                                "uniqueId": "lvl2-50"
+                            },
+                            "content": [
+                                "gradle",
+                                "vagrant"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 51,
+                                "uniqueId": "lvl2-51"
+                            },
+                            "content": [
+                                "jenkins"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 52,
+                                "uniqueId": "lvl2-52"
+                            },
+                            "content": [
+                                "molecule"
+                            ],
+                            "children": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "value": {
+                "id": 9,
+                "uniqueId": "lvl0-9"
+            },
+            "content": [
+                "emacs",
+                "uwp",
+                "neovim",
+                "xcode",
+                "sublime-text",
+                "visual-studio-code",
+                "vim",
+                "localization",
+                "npm"
+            ],
+            "children": [
+                {
+                    "value": {
+                        "id": 21,
+                        "uniqueId": "lvl1-21"
+                    },
+                    "content": [
+                        "emacs",
+                        "uwp",
+                        "neovim",
+                        "xcode"
+                    ],
+                    "children": [
+                        {
+                            "value": {
+                                "id": 53,
+                                "uniqueId": "lvl2-53"
+                            },
+                            "content": [
+                                "emacs"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 54,
+                                "uniqueId": "lvl2-54"
+                            },
+                            "content": [
+                                "uwp"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 55,
+                                "uniqueId": "lvl2-55"
+                            },
+                            "content": [
+                                "neovim",
+                                "xcode"
+                            ],
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "value": {
+                        "id": 22,
+                        "uniqueId": "lvl1-22"
+                    },
+                    "content": [
+                        "sublime-text",
+                        "visual-studio-code",
+                        "vim",
+                        "localization",
+                        "npm"
+                    ],
+                    "children": [
+                        {
+                            "value": {
+                                "id": 56,
+                                "uniqueId": "lvl2-56"
+                            },
+                            "content": [
+                                "sublime-text",
+                                "visual-studio-code"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 57,
+                                "uniqueId": "lvl2-57"
+                            },
+                            "content": [
+                                "vim"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 58,
+                                "uniqueId": "lvl2-58"
+                            },
+                            "content": [
+                                "localization",
+                                "npm"
                             ],
                             "children": []
                         }
@@ -1708,61 +1361,88 @@
                 "uniqueId": "lvl0-10"
             },
             "content": [
-                "localization",
-                "npm",
-                "sublime-text",
-                "vim",
-                "visual-studio-code",
-                "xcode",
-                "emacs",
-                "neovim",
-                "uwp"
+                "data-visualization",
+                "robotics",
+                "computer-vision",
+                "neural-network",
+                "bioinformatics",
+                "nlp",
+                "raspberry-pi",
+                "3d",
+                "virtual-reality",
+                "library",
+                "ai",
+                "machine-learning",
+                "image-processing",
+                "jupyter-notebook",
+                "deep-learning",
+                "opencv",
+                "scikit-learn",
+                "tensorflow"
             ],
             "children": [
                 {
                     "value": {
-                        "id": 31,
-                        "uniqueId": "lvl1-31"
+                        "id": 23,
+                        "uniqueId": "lvl1-23"
                     },
                     "content": [
-                        "localization",
-                        "npm",
-                        "sublime-text",
-                        "vim",
-                        "visual-studio-code",
-                        "xcode"
+                        "data-visualization",
+                        "robotics",
+                        "computer-vision",
+                        "neural-network",
+                        "bioinformatics",
+                        "nlp"
                     ],
                     "children": [
                         {
                             "value": {
-                                "id": 79,
-                                "uniqueId": "lvl2-79"
+                                "id": 59,
+                                "uniqueId": "lvl2-59"
                             },
                             "content": [
-                                "localization",
-                                "npm"
+                                "data-visualization"
                             ],
                             "children": []
                         },
                         {
                             "value": {
-                                "id": 80,
-                                "uniqueId": "lvl2-80"
+                                "id": 60,
+                                "uniqueId": "lvl2-60"
                             },
                             "content": [
-                                "sublime-text",
-                                "vim",
-                                "visual-studio-code"
+                                "robotics"
                             ],
                             "children": []
                         },
                         {
                             "value": {
-                                "id": 81,
-                                "uniqueId": "lvl2-81"
+                                "id": 61,
+                                "uniqueId": "lvl2-61"
                             },
                             "content": [
-                                "xcode"
+                                "computer-vision"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 62,
+                                "uniqueId": "lvl2-62"
+                            },
+                            "content": [
+                                "neural-network"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 63,
+                                "uniqueId": "lvl2-63"
+                            },
+                            "content": [
+                                "bioinformatics",
+                                "nlp"
                             ],
                             "children": []
                         }
@@ -1770,24 +1450,135 @@
                 },
                 {
                     "value": {
-                        "id": 32,
-                        "uniqueId": "lvl1-32"
+                        "id": 24,
+                        "uniqueId": "lvl1-24"
                     },
                     "content": [
-                        "emacs",
-                        "neovim",
-                        "uwp"
+                        "raspberry-pi"
                     ],
                     "children": [
                         {
                             "value": {
-                                "id": 82,
-                                "uniqueId": "lvl2-82"
+                                "id": 64,
+                                "uniqueId": "lvl2-64"
                             },
                             "content": [
-                                "emacs",
-                                "neovim",
-                                "uwp"
+                                "raspberry-pi"
+                            ],
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "value": {
+                        "id": 25,
+                        "uniqueId": "lvl1-25"
+                    },
+                    "content": [
+                        "3d",
+                        "virtual-reality"
+                    ],
+                    "children": [
+                        {
+                            "value": {
+                                "id": 65,
+                                "uniqueId": "lvl2-65"
+                            },
+                            "content": [
+                                "3d",
+                                "virtual-reality"
+                            ],
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "value": {
+                        "id": 26,
+                        "uniqueId": "lvl1-26"
+                    },
+                    "content": [
+                        "library",
+                        "ai",
+                        "machine-learning",
+                        "image-processing",
+                        "jupyter-notebook"
+                    ],
+                    "children": [
+                        {
+                            "value": {
+                                "id": 66,
+                                "uniqueId": "lvl2-66"
+                            },
+                            "content": [
+                                "library"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 67,
+                                "uniqueId": "lvl2-67"
+                            },
+                            "content": [
+                                "ai",
+                                "machine-learning"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 68,
+                                "uniqueId": "lvl2-68"
+                            },
+                            "content": [
+                                "image-processing"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 69,
+                                "uniqueId": "lvl2-69"
+                            },
+                            "content": [
+                                "jupyter-notebook"
+                            ],
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "value": {
+                        "id": 27,
+                        "uniqueId": "lvl1-27"
+                    },
+                    "content": [
+                        "deep-learning",
+                        "opencv",
+                        "scikit-learn",
+                        "tensorflow"
+                    ],
+                    "children": [
+                        {
+                            "value": {
+                                "id": 70,
+                                "uniqueId": "lvl2-70"
+                            },
+                            "content": [
+                                "deep-learning",
+                                "opencv"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 71,
+                                "uniqueId": "lvl2-71"
+                            },
+                            "content": [
+                                "scikit-learn",
+                                "tensorflow"
                             ],
                             "children": []
                         }
@@ -1801,46 +1592,169 @@
                 "uniqueId": "lvl0-11"
             },
             "content": [
-                "github",
-                "github-api",
-                "google",
-                "monitoring",
-                "testing"
+                "json",
+                "xml",
+                "opengl",
+                "webextension",
+                "mongodb",
+                "database",
+                "sql",
+                "ios",
+                "bot",
+                "emoji",
+                "api",
+                "telegram",
+                "http",
+                "privacy",
+                "security"
             ],
             "children": [
                 {
                     "value": {
-                        "id": 33,
-                        "uniqueId": "lvl1-33"
+                        "id": 28,
+                        "uniqueId": "lvl1-28"
                     },
                     "content": [
-                        "github",
-                        "github-api",
-                        "google",
-                        "monitoring",
-                        "testing"
+                        "json",
+                        "xml",
+                        "opengl",
+                        "webextension"
                     ],
                     "children": [
                         {
                             "value": {
-                                "id": 83,
-                                "uniqueId": "lvl2-83"
+                                "id": 72,
+                                "uniqueId": "lvl2-72"
                             },
                             "content": [
-                                "github",
-                                "github-api"
+                                "json",
+                                "xml"
                             ],
                             "children": []
                         },
                         {
                             "value": {
-                                "id": 84,
-                                "uniqueId": "lvl2-84"
+                                "id": 73,
+                                "uniqueId": "lvl2-73"
                             },
                             "content": [
-                                "google",
-                                "monitoring",
-                                "testing"
+                                "opengl",
+                                "webextension"
+                            ],
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "value": {
+                        "id": 29,
+                        "uniqueId": "lvl1-29"
+                    },
+                    "content": [
+                        "mongodb",
+                        "database",
+                        "sql"
+                    ],
+                    "children": [
+                        {
+                            "value": {
+                                "id": 74,
+                                "uniqueId": "lvl2-74"
+                            },
+                            "content": [
+                                "mongodb"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 75,
+                                "uniqueId": "lvl2-75"
+                            },
+                            "content": [
+                                "database",
+                                "sql"
+                            ],
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "value": {
+                        "id": 30,
+                        "uniqueId": "lvl1-30"
+                    },
+                    "content": [
+                        "ios",
+                        "bot",
+                        "emoji"
+                    ],
+                    "children": [
+                        {
+                            "value": {
+                                "id": 76,
+                                "uniqueId": "lvl2-76"
+                            },
+                            "content": [
+                                "ios"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 77,
+                                "uniqueId": "lvl2-77"
+                            },
+                            "content": [
+                                "bot",
+                                "emoji"
+                            ],
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "value": {
+                        "id": 31,
+                        "uniqueId": "lvl1-31"
+                    },
+                    "content": [
+                        "api",
+                        "telegram",
+                        "http",
+                        "privacy",
+                        "security"
+                    ],
+                    "children": [
+                        {
+                            "value": {
+                                "id": 78,
+                                "uniqueId": "lvl2-78"
+                            },
+                            "content": [
+                                "api",
+                                "telegram"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 79,
+                                "uniqueId": "lvl2-79"
+                            },
+                            "content": [
+                                "http"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 80,
+                                "uniqueId": "lvl2-80"
+                            },
+                            "content": [
+                                "privacy",
+                                "security"
                             ],
                             "children": []
                         }
@@ -1854,58 +1768,98 @@
                 "uniqueId": "lvl0-12"
             },
             "content": [
-                "bash",
-                "fish",
-                "cli",
-                "powershell",
-                "shell",
-                "docker",
-                "kubernetes",
-                "nuget",
-                "package-manager",
-                "compiler",
-                "composer",
-                "gradle",
-                "jenkins",
-                "vagrant",
-                "cms",
-                "molecule",
-                "terminal"
+                "sass",
+                "web-components",
+                "pwa",
+                "styled-components",
+                "jquery",
+                "less",
+                "threejs",
+                "javafx",
+                "discord",
+                "firefox-extension",
+                "markdown",
+                "material-design",
+                "serverless"
             ],
             "children": [
+                {
+                    "value": {
+                        "id": 32,
+                        "uniqueId": "lvl1-32"
+                    },
+                    "content": [
+                        "sass",
+                        "web-components"
+                    ],
+                    "children": [
+                        {
+                            "value": {
+                                "id": 81,
+                                "uniqueId": "lvl2-81"
+                            },
+                            "content": [
+                                "sass",
+                                "web-components"
+                            ],
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "value": {
+                        "id": 33,
+                        "uniqueId": "lvl1-33"
+                    },
+                    "content": [
+                        "pwa",
+                        "styled-components",
+                        "jquery",
+                        "less",
+                        "threejs"
+                    ],
+                    "children": [
+                        {
+                            "value": {
+                                "id": 82,
+                                "uniqueId": "lvl2-82"
+                            },
+                            "content": [
+                                "pwa",
+                                "styled-components"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 83,
+                                "uniqueId": "lvl2-83"
+                            },
+                            "content": [
+                                "jquery",
+                                "less",
+                                "threejs"
+                            ],
+                            "children": []
+                        }
+                    ]
+                },
                 {
                     "value": {
                         "id": 34,
                         "uniqueId": "lvl1-34"
                     },
                     "content": [
-                        "bash",
-                        "fish",
-                        "cli",
-                        "powershell",
-                        "shell"
+                        "javafx"
                     ],
                     "children": [
                         {
                             "value": {
-                                "id": 85,
-                                "uniqueId": "lvl2-85"
+                                "id": 84,
+                                "uniqueId": "lvl2-84"
                             },
                             "content": [
-                                "bash",
-                                "fish"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 86,
-                                "uniqueId": "lvl2-86"
-                            },
-                            "content": [
-                                "cli",
-                                "powershell",
-                                "shell"
+                                "javafx"
                             ],
                             "children": []
                         }
@@ -1917,44 +1871,18 @@
                         "uniqueId": "lvl1-35"
                     },
                     "content": [
-                        "docker",
-                        "kubernetes",
-                        "nuget",
-                        "package-manager",
-                        "compiler",
-                        "composer"
+                        "discord",
+                        "firefox-extension"
                     ],
                     "children": [
                         {
                             "value": {
-                                "id": 87,
-                                "uniqueId": "lvl2-87"
+                                "id": 85,
+                                "uniqueId": "lvl2-85"
                             },
                             "content": [
-                                "docker",
-                                "kubernetes"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 88,
-                                "uniqueId": "lvl2-88"
-                            },
-                            "content": [
-                                "nuget",
-                                "package-manager"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 89,
-                                "uniqueId": "lvl2-89"
-                            },
-                            "content": [
-                                "compiler",
-                                "composer"
+                                "discord",
+                                "firefox-extension"
                             ],
                             "children": []
                         }
@@ -1966,35 +1894,20 @@
                         "uniqueId": "lvl1-36"
                     },
                     "content": [
-                        "gradle",
-                        "jenkins",
-                        "vagrant",
-                        "cms",
-                        "molecule",
-                        "terminal"
+                        "markdown",
+                        "material-design",
+                        "serverless"
                     ],
                     "children": [
                         {
                             "value": {
-                                "id": 90,
-                                "uniqueId": "lvl2-90"
+                                "id": 86,
+                                "uniqueId": "lvl2-86"
                             },
                             "content": [
-                                "gradle",
-                                "jenkins",
-                                "vagrant"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 91,
-                                "uniqueId": "lvl2-91"
-                            },
-                            "content": [
-                                "cms",
-                                "molecule",
-                                "terminal"
+                                "markdown",
+                                "material-design",
+                                "serverless"
                             ],
                             "children": []
                         }
@@ -2008,11 +1921,23 @@
                 "uniqueId": "lvl0-13"
             },
             "content": [
-                "clojure",
-                "fortran",
-                "julia",
-                "haskell",
-                "lisp"
+                "jekyll",
+                "rails",
+                "laravel",
+                "yii",
+                "django",
+                "flask",
+                "angular",
+                "bootstrap",
+                "ember",
+                "nuxt",
+                "react-native",
+                "express",
+                "svelte",
+                "koa",
+                "nestjs",
+                "tailwind",
+                "phaser"
             ],
             "children": [
                 {
@@ -2021,42 +1946,150 @@
                         "uniqueId": "lvl1-37"
                     },
                     "content": [
-                        "clojure",
-                        "fortran",
-                        "julia",
-                        "haskell",
-                        "lisp"
+                        "jekyll",
+                        "rails",
+                        "laravel",
+                        "yii",
+                        "django",
+                        "flask"
                     ],
                     "children": [
+                        {
+                            "value": {
+                                "id": 87,
+                                "uniqueId": "lvl2-87"
+                            },
+                            "content": [
+                                "jekyll",
+                                "rails"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 88,
+                                "uniqueId": "lvl2-88"
+                            },
+                            "content": [
+                                "laravel",
+                                "yii"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 89,
+                                "uniqueId": "lvl2-89"
+                            },
+                            "content": [
+                                "django",
+                                "flask"
+                            ],
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "value": {
+                        "id": 38,
+                        "uniqueId": "lvl1-38"
+                    },
+                    "content": [
+                        "angular",
+                        "bootstrap",
+                        "ember",
+                        "nuxt",
+                        "react-native"
+                    ],
+                    "children": [
+                        {
+                            "value": {
+                                "id": 90,
+                                "uniqueId": "lvl2-90"
+                            },
+                            "content": [
+                                "angular"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 91,
+                                "uniqueId": "lvl2-91"
+                            },
+                            "content": [
+                                "bootstrap"
+                            ],
+                            "children": []
+                        },
                         {
                             "value": {
                                 "id": 92,
                                 "uniqueId": "lvl2-92"
                             },
                             "content": [
-                                "clojure",
-                                "fortran",
-                                "julia"
+                                "ember",
+                                "nuxt",
+                                "react-native"
                             ],
                             "children": []
-                        },
+                        }
+                    ]
+                },
+                {
+                    "value": {
+                        "id": 39,
+                        "uniqueId": "lvl1-39"
+                    },
+                    "content": [
+                        "express",
+                        "svelte"
+                    ],
+                    "children": [
                         {
                             "value": {
                                 "id": 93,
                                 "uniqueId": "lvl2-93"
                             },
                             "content": [
-                                "haskell"
+                                "express",
+                                "svelte"
                             ],
                             "children": []
-                        },
+                        }
+                    ]
+                },
+                {
+                    "value": {
+                        "id": 40,
+                        "uniqueId": "lvl1-40"
+                    },
+                    "content": [
+                        "koa",
+                        "nestjs",
+                        "tailwind",
+                        "phaser"
+                    ],
+                    "children": [
                         {
                             "value": {
                                 "id": 94,
                                 "uniqueId": "lvl2-94"
                             },
                             "content": [
-                                "lisp"
+                                "koa",
+                                "nestjs",
+                                "tailwind"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 95,
+                                "uniqueId": "lvl2-95"
+                            },
+                            "content": [
+                                "phaser"
                             ],
                             "children": []
                         }
@@ -2070,54 +2103,22 @@
                 "uniqueId": "lvl0-14"
             },
             "content": [
-                "scala",
-                "haxe",
-                "perl",
-                "nim",
-                "objective-c",
-                "purescript",
-                "dart",
-                "fsharp",
-                "es6",
-                "crystal",
-                "elm",
-                "kotlin",
-                "racket",
-                "swift",
-                "matlab",
-                "elixir",
-                "ocaml",
-                "r"
+                "atom",
+                "babel",
+                "clojurescript",
+                "phpunit"
             ],
             "children": [
                 {
                     "value": {
-                        "id": 38,
-                        "uniqueId": "lvl1-38"
+                        "id": 41,
+                        "uniqueId": "lvl1-41"
                     },
                     "content": [
-                        "scala"
-                    ],
-                    "children": [
-                        {
-                            "value": {
-                                "id": 95,
-                                "uniqueId": "lvl2-95"
-                            },
-                            "content": [
-                                "scala"
-                            ],
-                            "children": []
-                        }
-                    ]
-                },
-                {
-                    "value": {
-                        "id": 39,
-                        "uniqueId": "lvl1-39"
-                    },
-                    "content": [
-                        "haxe"
+                        "atom",
+                        "babel",
+                        "clojurescript",
+                        "phpunit"
                     ],
                     "children": [
                         {
@@ -2126,237 +2127,19 @@
                                 "uniqueId": "lvl2-96"
                             },
                             "content": [
-                                "haxe"
+                                "atom",
+                                "babel",
+                                "clojurescript"
                             ],
                             "children": []
-                        }
-                    ]
-                },
-                {
-                    "value": {
-                        "id": 40,
-                        "uniqueId": "lvl1-40"
-                    },
-                    "content": [
-                        "perl"
-                    ],
-                    "children": [
+                        },
                         {
                             "value": {
                                 "id": 97,
                                 "uniqueId": "lvl2-97"
                             },
                             "content": [
-                                "perl"
-                            ],
-                            "children": []
-                        }
-                    ]
-                },
-                {
-                    "value": {
-                        "id": 41,
-                        "uniqueId": "lvl1-41"
-                    },
-                    "content": [
-                        "nim",
-                        "objective-c",
-                        "purescript",
-                        "dart",
-                        "fsharp",
-                        "es6"
-                    ],
-                    "children": [
-                        {
-                            "value": {
-                                "id": 98,
-                                "uniqueId": "lvl2-98"
-                            },
-                            "content": [
-                                "nim",
-                                "objective-c",
-                                "purescript"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 99,
-                                "uniqueId": "lvl2-99"
-                            },
-                            "content": [
-                                "dart"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 100,
-                                "uniqueId": "lvl2-100"
-                            },
-                            "content": [
-                                "fsharp"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 101,
-                                "uniqueId": "lvl2-101"
-                            },
-                            "content": [
-                                "es6"
-                            ],
-                            "children": []
-                        }
-                    ]
-                },
-                {
-                    "value": {
-                        "id": 42,
-                        "uniqueId": "lvl1-42"
-                    },
-                    "content": [
-                        "crystal"
-                    ],
-                    "children": [
-                        {
-                            "value": {
-                                "id": 102,
-                                "uniqueId": "lvl2-102"
-                            },
-                            "content": [
-                                "crystal"
-                            ],
-                            "children": []
-                        }
-                    ]
-                },
-                {
-                    "value": {
-                        "id": 43,
-                        "uniqueId": "lvl1-43"
-                    },
-                    "content": [
-                        "elm",
-                        "kotlin"
-                    ],
-                    "children": [
-                        {
-                            "value": {
-                                "id": 103,
-                                "uniqueId": "lvl2-103"
-                            },
-                            "content": [
-                                "elm",
-                                "kotlin"
-                            ],
-                            "children": []
-                        }
-                    ]
-                },
-                {
-                    "value": {
-                        "id": 44,
-                        "uniqueId": "lvl1-44"
-                    },
-                    "content": [
-                        "racket"
-                    ],
-                    "children": [
-                        {
-                            "value": {
-                                "id": 104,
-                                "uniqueId": "lvl2-104"
-                            },
-                            "content": [
-                                "racket"
-                            ],
-                            "children": []
-                        }
-                    ]
-                },
-                {
-                    "value": {
-                        "id": 45,
-                        "uniqueId": "lvl1-45"
-                    },
-                    "content": [
-                        "swift"
-                    ],
-                    "children": [
-                        {
-                            "value": {
-                                "id": 105,
-                                "uniqueId": "lvl2-105"
-                            },
-                            "content": [
-                                "swift"
-                            ],
-                            "children": []
-                        }
-                    ]
-                },
-                {
-                    "value": {
-                        "id": 46,
-                        "uniqueId": "lvl1-46"
-                    },
-                    "content": [
-                        "matlab"
-                    ],
-                    "children": [
-                        {
-                            "value": {
-                                "id": 106,
-                                "uniqueId": "lvl2-106"
-                            },
-                            "content": [
-                                "matlab"
-                            ],
-                            "children": []
-                        }
-                    ]
-                },
-                {
-                    "value": {
-                        "id": 47,
-                        "uniqueId": "lvl1-47"
-                    },
-                    "content": [
-                        "elixir",
-                        "ocaml"
-                    ],
-                    "children": [
-                        {
-                            "value": {
-                                "id": 107,
-                                "uniqueId": "lvl2-107"
-                            },
-                            "content": [
-                                "elixir",
-                                "ocaml"
-                            ],
-                            "children": []
-                        }
-                    ]
-                },
-                {
-                    "value": {
-                        "id": 48,
-                        "uniqueId": "lvl1-48"
-                    },
-                    "content": [
-                        "r"
-                    ],
-                    "children": [
-                        {
-                            "value": {
-                                "id": 108,
-                                "uniqueId": "lvl2-108"
-                            },
-                            "content": [
-                                "r"
+                                "phpunit"
                             ],
                             "children": []
                         }
@@ -2370,37 +2153,42 @@
                 "uniqueId": "lvl0-15"
             },
             "content": [
-                "algorithm",
-                "arduino",
-                "cassandra",
-                "go",
-                "lua",
-                "ruby",
-                "rust",
-                "csharp",
-                "typescript"
+                "qt",
+                "sketch",
+                "storybook",
+                "dotnet",
+                "llvm",
+                "wpf",
+                "framework",
+                "game-engine",
+                "firebase",
+                "mobile",
+                "xamarin",
+                "flutter",
+                "nativescript",
+                "spring-boot"
             ],
             "children": [
                 {
                     "value": {
-                        "id": 49,
-                        "uniqueId": "lvl1-49"
+                        "id": 42,
+                        "uniqueId": "lvl1-42"
                     },
                     "content": [
-                        "algorithm",
-                        "arduino",
-                        "cassandra"
+                        "qt",
+                        "sketch",
+                        "storybook"
                     ],
                     "children": [
                         {
                             "value": {
-                                "id": 109,
-                                "uniqueId": "lvl2-109"
+                                "id": 98,
+                                "uniqueId": "lvl2-98"
                             },
                             "content": [
-                                "algorithm",
-                                "arduino",
-                                "cassandra"
+                                "qt",
+                                "sketch",
+                                "storybook"
                             ],
                             "children": []
                         }
@@ -2408,48 +2196,77 @@
                 },
                 {
                     "value": {
-                        "id": 50,
-                        "uniqueId": "lvl1-50"
+                        "id": 43,
+                        "uniqueId": "lvl1-43"
                     },
                     "content": [
-                        "go",
-                        "lua",
-                        "ruby",
-                        "rust",
-                        "csharp",
-                        "typescript"
+                        "dotnet",
+                        "llvm",
+                        "wpf",
+                        "framework",
+                        "game-engine"
                     ],
                     "children": [
                         {
                             "value": {
-                                "id": 110,
-                                "uniqueId": "lvl2-110"
+                                "id": 99,
+                                "uniqueId": "lvl2-99"
                             },
                             "content": [
-                                "go"
+                                "dotnet",
+                                "llvm",
+                                "wpf"
                             ],
                             "children": []
                         },
                         {
                             "value": {
-                                "id": 111,
-                                "uniqueId": "lvl2-111"
+                                "id": 100,
+                                "uniqueId": "lvl2-100"
                             },
                             "content": [
-                                "lua",
-                                "ruby",
-                                "rust"
+                                "framework",
+                                "game-engine"
+                            ],
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "value": {
+                        "id": 44,
+                        "uniqueId": "lvl1-44"
+                    },
+                    "content": [
+                        "firebase",
+                        "mobile",
+                        "xamarin",
+                        "flutter",
+                        "nativescript",
+                        "spring-boot"
+                    ],
+                    "children": [
+                        {
+                            "value": {
+                                "id": 101,
+                                "uniqueId": "lvl2-101"
+                            },
+                            "content": [
+                                "firebase",
+                                "mobile",
+                                "xamarin"
                             ],
                             "children": []
                         },
                         {
                             "value": {
-                                "id": 112,
-                                "uniqueId": "lvl2-112"
+                                "id": 102,
+                                "uniqueId": "lvl2-102"
                             },
                             "content": [
-                                "csharp",
-                                "typescript"
+                                "flutter",
+                                "nativescript",
+                                "spring-boot"
                             ],
                             "children": []
                         }
@@ -2463,43 +2280,188 @@
                 "uniqueId": "lvl0-16"
             },
             "content": [
-                "hackathon",
-                "hacktoberfest",
-                "bitcoin",
-                "csv"
+                "electron",
+                "frontend",
+                "css",
+                "html",
+                "javascript",
+                "nodejs",
+                "react",
+                "gatsby",
+                "redux",
+                "vue",
+                "graphql",
+                "symfony",
+                "wordpress",
+                "php",
+                "ajax",
+                "gulp",
+                "webpack",
+                "eslint"
             ],
             "children": [
                 {
                     "value": {
-                        "id": 51,
-                        "uniqueId": "lvl1-51"
+                        "id": 45,
+                        "uniqueId": "lvl1-45"
                     },
                     "content": [
-                        "hackathon",
-                        "hacktoberfest",
-                        "bitcoin",
-                        "csv"
+                        "electron",
+                        "frontend",
+                        "css",
+                        "html",
+                        "javascript"
                     ],
                     "children": [
                         {
                             "value": {
-                                "id": 113,
-                                "uniqueId": "lvl2-113"
+                                "id": 103,
+                                "uniqueId": "lvl2-103"
                             },
                             "content": [
-                                "hackathon",
-                                "hacktoberfest"
+                                "electron",
+                                "frontend"
                             ],
                             "children": []
                         },
                         {
                             "value": {
-                                "id": 114,
-                                "uniqueId": "lvl2-114"
+                                "id": 104,
+                                "uniqueId": "lvl2-104"
                             },
                             "content": [
-                                "bitcoin",
-                                "csv"
+                                "css",
+                                "html"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 105,
+                                "uniqueId": "lvl2-105"
+                            },
+                            "content": [
+                                "javascript"
+                            ],
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "value": {
+                        "id": 46,
+                        "uniqueId": "lvl1-46"
+                    },
+                    "content": [
+                        "nodejs",
+                        "react",
+                        "gatsby",
+                        "redux",
+                        "vue"
+                    ],
+                    "children": [
+                        {
+                            "value": {
+                                "id": 106,
+                                "uniqueId": "lvl2-106"
+                            },
+                            "content": [
+                                "nodejs",
+                                "react"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 107,
+                                "uniqueId": "lvl2-107"
+                            },
+                            "content": [
+                                "gatsby",
+                                "redux",
+                                "vue"
+                            ],
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "value": {
+                        "id": 47,
+                        "uniqueId": "lvl1-47"
+                    },
+                    "content": [
+                        "graphql",
+                        "symfony",
+                        "wordpress"
+                    ],
+                    "children": [
+                        {
+                            "value": {
+                                "id": 108,
+                                "uniqueId": "lvl2-108"
+                            },
+                            "content": [
+                                "graphql",
+                                "symfony",
+                                "wordpress"
+                            ],
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "value": {
+                        "id": 48,
+                        "uniqueId": "lvl1-48"
+                    },
+                    "content": [
+                        "php"
+                    ],
+                    "children": [
+                        {
+                            "value": {
+                                "id": 109,
+                                "uniqueId": "lvl2-109"
+                            },
+                            "content": [
+                                "php"
+                            ],
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "value": {
+                        "id": 49,
+                        "uniqueId": "lvl1-49"
+                    },
+                    "content": [
+                        "ajax",
+                        "gulp",
+                        "webpack",
+                        "eslint"
+                    ],
+                    "children": [
+                        {
+                            "value": {
+                                "id": 110,
+                                "uniqueId": "lvl2-110"
+                            },
+                            "content": [
+                                "ajax",
+                                "gulp",
+                                "webpack"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 111,
+                                "uniqueId": "lvl2-111"
+                            },
+                            "content": [
+                                "eslint"
                             ],
                             "children": []
                         }
@@ -2513,117 +2475,86 @@
                 "uniqueId": "lvl0-17"
             },
             "content": [
-                "jwt",
-                "rest-api",
-                "ipfs",
-                "p2p",
-                "nginx",
-                "chrome",
-                "chrome-extension",
-                "twitter",
-                "server",
-                "font"
+                "algorithm",
+                "arduino",
+                "cassandra",
+                "go",
+                "csharp",
+                "typescript",
+                "lua",
+                "ruby",
+                "rust"
             ],
             "children": [
                 {
                     "value": {
-                        "id": 52,
-                        "uniqueId": "lvl1-52"
+                        "id": 50,
+                        "uniqueId": "lvl1-50"
                     },
                     "content": [
-                        "jwt",
-                        "rest-api",
-                        "ipfs",
-                        "p2p"
+                        "algorithm",
+                        "arduino",
+                        "cassandra"
                     ],
                     "children": [
+                        {
+                            "value": {
+                                "id": 112,
+                                "uniqueId": "lvl2-112"
+                            },
+                            "content": [
+                                "algorithm",
+                                "arduino",
+                                "cassandra"
+                            ],
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "value": {
+                        "id": 51,
+                        "uniqueId": "lvl1-51"
+                    },
+                    "content": [
+                        "go",
+                        "csharp",
+                        "typescript",
+                        "lua",
+                        "ruby",
+                        "rust"
+                    ],
+                    "children": [
+                        {
+                            "value": {
+                                "id": 113,
+                                "uniqueId": "lvl2-113"
+                            },
+                            "content": [
+                                "go"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 114,
+                                "uniqueId": "lvl2-114"
+                            },
+                            "content": [
+                                "csharp",
+                                "typescript"
+                            ],
+                            "children": []
+                        },
                         {
                             "value": {
                                 "id": 115,
                                 "uniqueId": "lvl2-115"
                             },
                             "content": [
-                                "jwt",
-                                "rest-api"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 116,
-                                "uniqueId": "lvl2-116"
-                            },
-                            "content": [
-                                "ipfs",
-                                "p2p"
-                            ],
-                            "children": []
-                        }
-                    ]
-                },
-                {
-                    "value": {
-                        "id": 53,
-                        "uniqueId": "lvl1-53"
-                    },
-                    "content": [
-                        "nginx",
-                        "chrome",
-                        "chrome-extension",
-                        "twitter",
-                        "server"
-                    ],
-                    "children": [
-                        {
-                            "value": {
-                                "id": 117,
-                                "uniqueId": "lvl2-117"
-                            },
-                            "content": [
-                                "nginx"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 118,
-                                "uniqueId": "lvl2-118"
-                            },
-                            "content": [
-                                "chrome",
-                                "chrome-extension",
-                                "twitter"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 119,
-                                "uniqueId": "lvl2-119"
-                            },
-                            "content": [
-                                "server"
-                            ],
-                            "children": []
-                        }
-                    ]
-                },
-                {
-                    "value": {
-                        "id": 54,
-                        "uniqueId": "lvl1-54"
-                    },
-                    "content": [
-                        "font"
-                    ],
-                    "children": [
-                        {
-                            "value": {
-                                "id": 120,
-                                "uniqueId": "lvl2-120"
-                            },
-                            "content": [
-                                "font"
+                                "lua",
+                                "ruby",
+                                "rust"
                             ],
                             "children": []
                         }
@@ -2637,42 +2568,130 @@
                 "uniqueId": "lvl0-18"
             },
             "content": [
-                "aws",
-                "azure",
-                "archlinux",
-                "homebrew",
-                "git",
-                "google-cloud",
-                "twitch",
-                "blockchain",
-                "cryptocurrency",
-                "ethereum",
-                "homebridge",
-                "redis",
-                "documentation",
-                "latex",
-                "yaml",
-                "data-structures",
-                "nosql",
-                "sqlite",
-                "emulator",
-                "minecraft",
-                "postgresql"
+                "fsharp",
+                "nim",
+                "objective-c",
+                "perl",
+                "purescript",
+                "scala",
+                "swift",
+                "kotlin",
+                "haxe",
+                "crystal",
+                "elm",
+                "racket",
+                "es6",
+                "dart",
+                "matlab",
+                "elixir",
+                "ocaml",
+                "r"
             ],
             "children": [
+                {
+                    "value": {
+                        "id": 52,
+                        "uniqueId": "lvl1-52"
+                    },
+                    "content": [
+                        "fsharp"
+                    ],
+                    "children": [
+                        {
+                            "value": {
+                                "id": 116,
+                                "uniqueId": "lvl2-116"
+                            },
+                            "content": [
+                                "fsharp"
+                            ],
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "value": {
+                        "id": 53,
+                        "uniqueId": "lvl1-53"
+                    },
+                    "content": [
+                        "nim",
+                        "objective-c",
+                        "perl"
+                    ],
+                    "children": [
+                        {
+                            "value": {
+                                "id": 117,
+                                "uniqueId": "lvl2-117"
+                            },
+                            "content": [
+                                "nim",
+                                "objective-c",
+                                "perl"
+                            ],
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "value": {
+                        "id": 54,
+                        "uniqueId": "lvl1-54"
+                    },
+                    "content": [
+                        "purescript",
+                        "scala",
+                        "swift",
+                        "kotlin",
+                        "haxe"
+                    ],
+                    "children": [
+                        {
+                            "value": {
+                                "id": 118,
+                                "uniqueId": "lvl2-118"
+                            },
+                            "content": [
+                                "purescript",
+                                "scala",
+                                "swift"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 119,
+                                "uniqueId": "lvl2-119"
+                            },
+                            "content": [
+                                "kotlin"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 120,
+                                "uniqueId": "lvl2-120"
+                            },
+                            "content": [
+                                "haxe"
+                            ],
+                            "children": []
+                        }
+                    ]
+                },
                 {
                     "value": {
                         "id": 55,
                         "uniqueId": "lvl1-55"
                     },
                     "content": [
-                        "aws",
-                        "azure",
-                        "archlinux",
-                        "homebrew",
-                        "git",
-                        "google-cloud",
-                        "twitch"
+                        "crystal",
+                        "elm",
+                        "racket",
+                        "es6",
+                        "dart"
                     ],
                     "children": [
                         {
@@ -2681,8 +2700,9 @@
                                 "uniqueId": "lvl2-121"
                             },
                             "content": [
-                                "aws",
-                                "azure"
+                                "crystal",
+                                "elm",
+                                "racket"
                             ],
                             "children": []
                         },
@@ -2692,8 +2712,7 @@
                                 "uniqueId": "lvl2-122"
                             },
                             "content": [
-                                "archlinux",
-                                "homebrew"
+                                "es6"
                             ],
                             "children": []
                         },
@@ -2703,9 +2722,7 @@
                                 "uniqueId": "lvl2-123"
                             },
                             "content": [
-                                "git",
-                                "google-cloud",
-                                "twitch"
+                                "dart"
                             ],
                             "children": []
                         }
@@ -2717,11 +2734,7 @@
                         "uniqueId": "lvl1-56"
                     },
                     "content": [
-                        "blockchain",
-                        "cryptocurrency",
-                        "ethereum",
-                        "homebridge",
-                        "redis"
+                        "matlab"
                     ],
                     "children": [
                         {
@@ -2730,20 +2743,7 @@
                                 "uniqueId": "lvl2-124"
                             },
                             "content": [
-                                "blockchain",
-                                "cryptocurrency"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 125,
-                                "uniqueId": "lvl2-125"
-                            },
-                            "content": [
-                                "ethereum",
-                                "homebridge",
-                                "redis"
+                                "matlab"
                             ],
                             "children": []
                         }
@@ -2755,20 +2755,18 @@
                         "uniqueId": "lvl1-57"
                     },
                     "content": [
-                        "documentation",
-                        "latex",
-                        "yaml"
+                        "elixir",
+                        "ocaml"
                     ],
                     "children": [
                         {
                             "value": {
-                                "id": 126,
-                                "uniqueId": "lvl2-126"
+                                "id": 125,
+                                "uniqueId": "lvl2-125"
                             },
                             "content": [
-                                "documentation",
-                                "latex",
-                                "yaml"
+                                "elixir",
+                                "ocaml"
                             ],
                             "children": []
                         }
@@ -2780,35 +2778,16 @@
                         "uniqueId": "lvl1-58"
                     },
                     "content": [
-                        "data-structures",
-                        "nosql",
-                        "sqlite",
-                        "emulator",
-                        "minecraft",
-                        "postgresql"
+                        "r"
                     ],
                     "children": [
                         {
                             "value": {
-                                "id": 127,
-                                "uniqueId": "lvl2-127"
+                                "id": 126,
+                                "uniqueId": "lvl2-126"
                             },
                             "content": [
-                                "data-structures",
-                                "nosql",
-                                "sqlite"
-                            ],
-                            "children": []
-                        },
-                        {
-                            "value": {
-                                "id": 128,
-                                "uniqueId": "lvl2-128"
-                            },
-                            "content": [
-                                "emulator",
-                                "minecraft",
-                                "postgresql"
+                                "r"
                             ],
                             "children": []
                         }
@@ -2822,7 +2801,11 @@
                 "uniqueId": "lvl0-19"
             },
             "content": [
-                "awesome"
+                "lisp",
+                "clojure",
+                "fortran",
+                "julia",
+                "haskell"
             ],
             "children": [
                 {
@@ -2831,16 +2814,42 @@
                         "uniqueId": "lvl1-59"
                     },
                     "content": [
-                        "awesome"
+                        "lisp",
+                        "clojure",
+                        "fortran",
+                        "julia",
+                        "haskell"
                     ],
                     "children": [
+                        {
+                            "value": {
+                                "id": 127,
+                                "uniqueId": "lvl2-127"
+                            },
+                            "content": [
+                                "lisp"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "value": {
+                                "id": 128,
+                                "uniqueId": "lvl2-128"
+                            },
+                            "content": [
+                                "clojure",
+                                "fortran",
+                                "julia"
+                            ],
+                            "children": []
+                        },
                         {
                             "value": {
                                 "id": 129,
                                 "uniqueId": "lvl2-129"
                             },
                             "content": [
-                                "awesome"
+                                "haskell"
                             ],
                             "children": []
                         }

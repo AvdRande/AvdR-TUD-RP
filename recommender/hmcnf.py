@@ -117,8 +117,9 @@ def train(train_feature_vector, train_labels, hierarchy, label_names, epochs):
         tree_sizes[1],
         tree_sizes[2],
         tree_sizes[3],
-        np.random.uniform(0.01, 0.6),
-        np.random.randint(128, 384),
+        0.2,
+        # np.random.randint(128, 384),
+        sum(tree_sizes),
         len(train_feature_vector[0])
     )
     device = torch.device("cpu")
