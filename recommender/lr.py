@@ -8,7 +8,7 @@ def train(train_feature_vector, train_labels, hierarchy, label_names, epochs):
         if sum(col) > 0:
             used_labels.append(i)
 
-    clf = MultiOutputClassifier(LogisticRegression(n_jobs=-1, class_weight='balanced', verbose=0)).fit(train_feature_vector, (train_labels.T[used_labels]).T)
+    clf = MultiOutputClassifier(LogisticRegression(n_jobs=1, class_weight='balanced', verbose=0)).fit(train_feature_vector, (train_labels.T[used_labels]).T)
 
     return [clf, np.array(used_labels)]
 

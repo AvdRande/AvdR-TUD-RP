@@ -8,6 +8,7 @@ data/
 recommender/models/
 train.txt
 test.txt
+slurm_outs/
 
 # User-specific files
 *.rsuser

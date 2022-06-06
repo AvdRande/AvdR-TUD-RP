@@ -1,6 +1,7 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
 import numpy as np
 from scipy import stats
+import torch
 
         
 # from izadi code
@@ -45,6 +46,28 @@ def add_parents_to_labels(labels, hierarchy, label_names):
     ret += leaf_labels
     return ret
 
+def make_anc_matrix(hierarchy, ret_size):
+    ret = np.zeros((ret_size, ret_size))
+
+    np.fill_diagonal(ret, 1)
+
+    # return indices of all descendants of node i in the hierarchy, as determined by the ancestor list
+    def get_descendants(hierarchy, i):
+        desc = []
+
+        return desc
+
+    for i in range(ret_size):
+        descendants = get_descendants(i) 
+        if descendants:
+            ret[i, descendants] = 1
+
+    ret = torch.tensor(ret)
+    #Transpose to get the ancestors for each node 
+    ret = ret.transpose(1, 0)
+
+    return ret
+
 def make_hier_matrix(hierarchy, ret_size):
     ret = np.zeros((ret_size, ret_size))
     node_names = find_node_names(hierarchy)
@@ -80,6 +103,17 @@ def find_node_names(hierarchy):
                 upcoming_level += child["children"]
         next_level = upcoming_level
     ret += leaf_labels
+    return ret
+
+def get_lvlsizes_from_tree(hierarchy):
+    ret = []
+    cur_level = hierarchy["children"]
+    while len(cur_level) > 0:
+        ret.append(len(cur_level))
+        next_level = []
+        for cur_tree in cur_level:
+            next_level += cur_tree["children"]
+        cur_level = next_level
     return ret
 
 def map_labels_to_tree_order(labels, hierarchy, label_names):

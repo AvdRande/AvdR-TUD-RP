@@ -7,7 +7,7 @@ from helper_fun import *
 
 def train(train_feature_vector, train_labels, hierarchy, label_names, epochs):
     train_labels_with_parents = np.array([add_parents_to_labels(train_label, hierarchy, label_names) for train_label in train_labels])
-    h_m = torch.from_numpy(make_hier_matrix(hierarchy, len(train_labels_with_parents[0])).T) # may have to transpose
+    h_m = make_anc_matrix(hierarchy, len(train_labels_with_parents[0]))
     
     device = torch.device("cuda:" + str(0) if torch.cuda.is_available() else "cpu")
 

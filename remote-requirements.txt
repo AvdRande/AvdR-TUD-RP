@@ -1,0 +1,7 @@
+numpy==1.19.5
+click
+pandas
+keras
+tensorflow
+torch
+networkx

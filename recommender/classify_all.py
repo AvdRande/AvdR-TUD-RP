@@ -5,8 +5,6 @@ import pandas as pd
 import json
 from multiprocessing.pool import Pool
 
-import multiprocessing
-
 from sklearn.metrics import average_precision_score
 
 from classifier import df2feature_class
@@ -32,14 +30,14 @@ def train_and_predict_model(tp_params):
     return predictions
 
 def main():
-    trainf = 'data\\tagrecomdata_topics220_repos152k_onehot_train.csv'
-    testf = 'data\\tagrecomdata_topics220_repos152k_onehot_test.csv'
+    trainf = 'data/tagrecomdata_topics220_repos152k_onehot_train.csv'
+    testf = 'data/tagrecomdata_topics220_repos152k_onehot_test.csv'
     
-    hierarchy_paths = ["recommender\\hierarchies\\four_hier\\" + hier_name + ".json" for hier_name in ["COM-AC", "COM-BK", "SKG-AC", "SKG-BK"]]
+    hierarchy_paths = ["recommender/hierarchies/four_hier/" + hier_name + ".json" for hier_name in ["COM-AC", "COM-BK", "SKG-AC", "SKG-BK"]]
     
     readme_column = 'text'
     labels_column = 'labels'
-    epochs = 1
+    epochs = 10
 
     print("Reading CSVs")
 
@@ -48,10 +46,15 @@ def main():
 
     hierarchies = [json.load(open(hierarchyf)) for hierarchyf in hierarchy_paths]
   
-    train_limiter = len(train)
-    test_limiter = len(test)
+    # train_limiter = len(train)
+    # test_limiter = len(test)
 
-    n_features = 20000
+    # n_features = 20000
+
+    train_limiter = 1000
+    test_limiter = 200
+
+    n_features = 500
 
     print("Converting csv to feature lists and labels")
     train_features, train_labels = df2feature_class(train, train_limiter, readme_column, labels_column)
@@ -63,10 +66,10 @@ def main():
     label_names = np.array(train.columns[:-2])
 
     recommenders = [
-        lr,
-        hmc_lmlp, 
-        hmc_lmlp_imp, 
-        awx, 
+        # lr,
+        # hmc_lmlp, 
+        # hmc_lmlp_imp, 
+        # awx, 
         chmcnnh
     ]
 
@@ -94,10 +97,10 @@ def main():
     for hier_path in hierarchy_paths:
         for rec in recommenders:
             results.append([
-                "Hier: " + hier_path.split("\\")[-1][:-5] +\
+                "Hier: " + hier_path.split("/")[-1][:-5] +\
                     " Rec: " + rec.get_name()])
 
-    pool = multiprocessing.Pool(processes = len(train_and_pred_params))
+    pool = Pool(processes = len(train_and_pred_params))
     predictions = pool.map(train_and_predict_model, train_and_pred_params)
 
     for i, prediction in enumerate(predictions):

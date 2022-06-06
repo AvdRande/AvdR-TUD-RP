@@ -27,7 +27,7 @@ def train(train_feature_vector, train_labels, hierarchy, label_names, epochs):
                     predictions.append(nn_layers[level].predict_proba(feature_matrix))
     return nn_layers
 
-def predict(model, test_feature_vector, depth ):
+def predict(model, test_feature_vector, depth):
     intermediate_predictions = []
     intermediate_predictions.append(model[0].predict_proba(test_feature_vector))
     for i in range(1, depth):
