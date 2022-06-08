@@ -66,20 +66,47 @@ def make_anc_matrix(hierarchy, ret_size):
 
     np.fill_diagonal(ret, 1)
 
-    # return indices of all descendants of node i in the hierarchy, as determined by the ancestor list
-    def get_descendants(hierarchy, i):
-        desc = []
+    # find all node names
+    node_names = [str(hierarchy["value"]["uniqueId"])]
+    next_level = hierarchy["children"]
+    leaf_names = []
+    while len(next_level) > 0:
+        upcoming_level = []
+        for child in next_level:
+            node_names.append(child["value"]["uniqueId"])
+            if len(child["children"]) == 0:
+                leaf_names += child["content"]
+            else:
+                upcoming_level += child["children"]
+        next_level = upcoming_level
+    node_names += leaf_names
 
-        return desc
+    def list_children_names(tree):
+        sub_ret = []
+        if len(tree["children"]) > 0:
+            for child in tree["children"]:
+                sub_ret.append(child["value"]["uniqueId"])
+                sub_ret += list_children_names(child)
+        else:
+            sub_ret = tree["content"]
+        return sub_ret
 
-    for i in range(ret_size):
-        descendants = get_descendants(i)
-        if descendants:
-            ret[i, descendants] = 1
+    # loop through all the levels, layer by layer, set 1 where relevant
+    next_level = [hierarchy]
+    while len(next_level) > 0:
+        upcoming_level = []
+        for node in next_level:
+            anc_id = node_names.index(node["value"]["uniqueId"])
+            child_names = list_children_names(node)
+            for child_name in child_names:
+                child_id = node_names.index(child_name)
+                ret[anc_id, child_id] = 1
+            upcoming_level += node["children"]
+        next_level = upcoming_level
 
     ret = torch.tensor(ret)
     # Transpose to get the ancestors for each node
-    ret = ret.transpose(1, 0)
+    # ret = ret.transpose(1, 0)
 
     return ret
 

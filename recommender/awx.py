@@ -51,7 +51,7 @@ def train(train_feature_vector, train_labels, hierarchy, label_names, nepochs):
         epochs=nepochs,
         batch_size=50,
         initial_epoch=0,
-        verbose=2,
+        verbose=0,
         callbacks=[
             keras.callbacks.EarlyStopping(
                 patience=10, monitor='loss', mode='auto', ),

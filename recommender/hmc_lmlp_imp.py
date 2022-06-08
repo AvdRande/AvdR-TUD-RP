@@ -22,7 +22,7 @@ def train(train_feature_vector, train_labels, hierarchy, label_names, epochs):
         n_hidden_layers = len(train_feature_vector)
         # make a new classifier for this level of the hierarchy
         nn_layers.append(MLPClassifier(solver='lbfgs', activation='logistic',
-                         hidden_layer_sizes=n_hidden_layers, random_state=1, max_iter=epochs, verbose=True))
+                         hidden_layer_sizes=n_hidden_layers, random_state=1, max_iter=epochs, verbose=False))
         # train the neural network
         print("Neural network consists of three layers: ", len(
             feature_matrix[0]), " to ", n_hidden_layers, " to ", len(target_labels[0]))

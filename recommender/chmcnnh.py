@@ -43,7 +43,6 @@ def train(train_feature_vector, train_labels, hierarchy, label_names, epochs):
     model.to(device)
 
     for epoch in range(epochs):
-        print("Epoch,", epoch)
         model.train()
 
         for i, (x, labels) in enumerate(train_loader):

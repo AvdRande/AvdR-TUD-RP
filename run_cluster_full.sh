@@ -1,12 +1,12 @@
 #!/bin/sh
 #
-#SBATCH --job-name="avdr-RP-train-partial"
+#SBATCH --job-name="avdr-RP-train-all"
 #SBATCH --partition=memory
-#SBATCH --time=18:00:00
-#SBATCH --nodes=1
+#SBATCH --time=24:00:00
+#SBATCH --nodes=2
 #SBATCH --ntasks-per-node=1
-#SBATCH --cpus-per-task=17
-#SBATCH --mem-per-cpu=32G
+#SBATCH --cpus-per-task=12
+#SBATCH --mem-per-cpu=64G
 
 # may want to comment this out if unneccesary
 mkdir -p /scratch/${USER}/.local
@@ -27,4 +27,4 @@ module load py-pip/21.1.2-v5263jz
 
 python -m pip install --user -r requirements.txt
 
-srun python recommender/classify_all.py
+srun python recommender/classify_all.py full

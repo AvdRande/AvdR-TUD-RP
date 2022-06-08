@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 import json
 from multiprocessing.pool import Pool
+import sys
 
 from sklearn.metrics import average_precision_score
 
@@ -50,17 +51,23 @@ def save_predict_results(prediction, s_params, model_name, hier_name):
     result.append(
         ", ".join(["F@" + str(k) + ": " + f["F@" + str(k)]for k in k_values]))
 
-    with open("partial_results.txt", "a") as result_file:
+    with open(s_params[3], "a") as result_file:
         for result_line in result:
             result_file.write(result_line + "\n")
         result_file.write("\n")
 
 
 def train_and_predict_model(tp_params):
-    trained_model = train_model(tp_params[0])
-    predictions = predict_model(trained_model, tp_params[1])
     model_name = tp_params[2][2]
     hier_name = tp_params[0][3]["name"]
+    print("Start training", model_name, "with", hier_name,
+          "at", datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
+    trained_model = train_model(tp_params[0])
+    print("Start predicting", model_name, "with", hier_name,
+          "at", datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
+    predictions = predict_model(trained_model, tp_params[1])
+    print("Saving results for", model_name, "with", hier_name,
+          "at", datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
     save_predict_results(predictions, tp_params[2], model_name, hier_name)
     return predictions
 
@@ -74,7 +81,6 @@ def main():
 
     readme_column = 'text'
     labels_column = 'labels'
-    epochs = 256
 
     print("Reading CSVs")
 
@@ -84,15 +90,20 @@ def main():
     hierarchies = [json.load(open(hierarchyf))
                    for hierarchyf in hierarchy_paths]
 
-    train_limiter = len(train)
-    test_limiter = len(test)
+    train_limiter = 10000
+    test_limiter = 2000
 
-    n_features = 20000
+    n_features = 5000
 
-    # train_limiter = 100
-    # test_limiter = 20
+    epochs = 128
 
-    # n_features = 50
+    if len(sys.argv) > 1:
+        train_limiter = len(train)
+        test_limiter = len(test)
+
+        n_features = 25000
+
+        epochs = 256
 
     print("Converting csv to feature lists and labels")
     train_features, train_labels = df2feature_class(
@@ -107,39 +118,49 @@ def main():
     label_names = np.array(train.columns[:-2])
 
     recommenders = [
-        # lr,
-        # hmc_lmlp,
+        lr,
+        hmc_lmlp,
         # hmc_lmlp_imp,
         hmcnf,
-        # awx,
-        # chmcnnh
+        awx,
+        chmcnnh
     ]
+
+    partial_file_name = "partial_results.txt" if len(
+        sys.argv) == 1 else "partial_results_full.txt"
+
+    # clear partial result file
+    with open(partial_file_name, "w") as result_file:
+        result_file.write("")
 
     train_and_pred_params = []
 
-    for hierarchy in hierarchies:
+    for hier_i, hierarchy in enumerate(hierarchies):
         hierarchy_mapping = make_hierarchy_mapping(hierarchy)
+        t_depth = tree_depth(hierarchy)
         for rec in recommenders:
-            train_and_pred_params.append(((
-                # first the training data
-                rec.train,
-                train_feature_vector,
-                train_labels,
-                hierarchy,
-                label_names,
-                epochs
-            ),
-                (
-                rec.predict,
-                test_feature_vector,
-                tree_depth(hierarchy)
-            ),
-                (
-                test_labels,
-                hierarchy_mapping,
-                rec.get_name()
-            )))
-
+            # make sure to only launch one LR, as more would be unneccesary
+            if not (hier_i > 0 and rec.get_name() == "LR"):
+                train_and_pred_params.append(((
+                    # first the training data
+                    rec.train,
+                    train_feature_vector,
+                    train_labels,
+                    hierarchy,
+                    label_names,
+                    epochs
+                ),
+                    (
+                    rec.predict,
+                    test_feature_vector,
+                    t_depth
+                ),
+                    (
+                    test_labels,
+                    hierarchy,
+                    rec.get_name(),
+                    partial_file_name
+                )))
     results = []
 
     for hier_path in hierarchy_paths:
@@ -147,10 +168,6 @@ def main():
             results.append([
                 "Hier: " + hier_path.split("/")[-1][:-5] +
                 " Rec: " + rec.get_name()])
-
-    # clear partial result file
-    with open("partial_results.txt", "w") as result_file:
-        result_file.write("")
 
     pool = Pool(processes=len(train_and_pred_params))
     predictions = pool.map(train_and_predict_model, train_and_pred_params)
