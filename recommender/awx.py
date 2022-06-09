@@ -49,7 +49,7 @@ def train(train_feature_vector, train_labels, hierarchy, label_names, nepochs):
         train_feature_vector,
         train_labels_with_parents,
         epochs=nepochs,
-        batch_size=50,
+        batch_size=4,
         initial_epoch=0,
         verbose=0,
         callbacks=[
